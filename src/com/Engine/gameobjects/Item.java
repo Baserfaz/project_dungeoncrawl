@@ -1,0 +1,69 @@
+package com.Engine.gameobjects;
+
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+
+import com.Engine.engine.Game;
+import com.Engine.enumerations.ItemType;
+import com.Engine.enumerations.SpriteType;
+import com.Engine.utilities.Coordinate;
+
+public class Item extends GameObject {
+
+    private ItemType itemType;
+    private String name;
+    
+    public Item(String name, ItemType itemType, Coordinate pos, SpriteType spriteType, int spriteSize, int spriteSizeMult) {
+        super(pos, spriteType, spriteSize, spriteSizeMult);
+        this.itemType = itemType;
+        this.name = name;
+        this.dragging = false;
+    }
+
+    public void tick() {
+        if(dragging) {
+            Point p = Game.instance.getMousePos();
+            int offset = (spriteSize * spriteSizeMult) / 2;
+            SetWorldPosition(p.x - offset, p.y - offset);
+        }
+    }
+
+    public void render(Graphics g) {
+        g.drawImage(this.sprite, this.worldPosition.x, this.worldPosition.y, null);
+        if(Game.drawItemRects) {
+            g.setColor(Game.itemRectColor);
+            g.drawRect(this.worldPosition.x, this.worldPosition.y, this.size, this.size);
+        }
+    }
+
+    public Rectangle GetBounds() {
+        return new Rectangle(this.worldPosition.x, this.worldPosition.y, this.size, this.size);
+    }
+
+    public void inspect() {
+        System.out.println("Inspect: " + this.GetInfo());
+    }
+    
+    public String GetInfo() {
+        String s = super.GetInfo();
+        s += " name: " + this.name;
+        return s;
+    }
+    
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}

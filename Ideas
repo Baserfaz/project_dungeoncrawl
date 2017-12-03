@@ -1,0 +1,37 @@
+Classes / play styles:
+
+1. 'Defender' / defensive shield wielder: 
+	1.1. abilities:
+		- enchant shield to do damage after blocking
+		- increase block chance for a short duration of time
+		- buff that increases block chance on each taken non-blocking hit,
+		  max stack at five stacks and each is 4%, therefore giving max +20% block chance.
+		  After a successful block the buff/stacks clear.
+		
+2. 'Illusionist' / item manipulator
+	2.1. abilities:
+		- can create unique items from thin air:
+			- shield (caster/tank shields)
+			- sword (fire sword, has 20 charges and one charge is used on attack)
+			- mace (thrown weapon, that comes back to the wielder's hand)
+		- can create a temporary item (copy) of an existing item.
+			- excluding usables and other temp. items.
+		
+3. 'Keeper' / tank+healer combo
+	3.1. abilities:
+		- can create aoe-bubble (single cell), in which the player gets buffs (?)
+		- buff: damaging hits to enemies heal the player
+		- buff: reflect some taken damage back to enemy
+		- healing abilities does damage to enemies next to the target
+		
+4. 'Enchanter' / item buffer
+	4.1. abilities:
+		- can enchant weapons with different passive abilities:
+			- weapons: 
+				- proc: player can attack twice instead of once
+				- proc: add random elemental damage
+				- proc: player does aoe-damage instead of single target damage
+		- can give a shield that reflects offensive spells
+		- can create an single use item that can identify one magic item.
+			 	
+			 	
