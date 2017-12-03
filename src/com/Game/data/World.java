@@ -10,12 +10,12 @@ public class World {
     private int width;
     private int height;
     private List<Tile> tiles;
-    
+
     public World(int width, int height) {
         this.width = width;
         this.height = height;
         tiles = new ArrayList<Tile>();
-        
+
         create();
     }
 
@@ -32,11 +32,11 @@ public class World {
             }   
         }
     }
-    
+
     private boolean isOuterTile(int x, int y) {
         return y == 0 || y == this.height - 1 || x == 0 || x == this.width - 1;
     }
-        
+
     public int getHeight() {
         return height;
     }
@@ -60,5 +60,5 @@ public class World {
     public void setTiles(List<Tile> tiles) {
         this.tiles = tiles;
     }
-    
+
 }

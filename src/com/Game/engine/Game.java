@@ -24,243 +24,243 @@ import com.Game.utilities.SpriteCreator;
 
 public class Game extends Canvas implements Runnable {
 
-	private static final long serialVersionUID = -5226776943692411279L;
+    private static final long serialVersionUID = -5226776943692411279L;
 
-	public static Game instance;
+    public static Game instance;
 
-	public static final int WIDTH                  = 448;			                   // window width
-	public static final int HEIGHT                 = 256;                              // window height
+    public static final int WIDTH                  = 448;			                   // window width
+    public static final int HEIGHT                 = 256;                              // window height
 
-	public static final int SCREEN_MULTIPLIER      = 3;
-	
-	public static final String TITLE               = "Project Dungeoncrawl";
-	
-	public static final int CAMERA_WIDTH           = 9 * 32 + 19;
-	public static final int CAMERA_HEIGHT          = 5 * 32;
-	
-	public static final int CAMERA_POSX            = 4 * 32 + 13;
-	public static final int CAMERA_POSY            = 0;
-	
-	public static final int CAMERAZOOM             = 1;                                // level of zoom
-	public static final double FRAME_CAP           = 60.0;                             // cap the framerate to this
+    public static final int SCREEN_MULTIPLIER      = 3;
 
-	public static final String SPRITESHEETNAME     = "images/UI_mockup.png";           // name of the spritesheet
-	public static final String FRAMICONPATH        = "resources/images/icon.png";      // path to frame icon.
+    public static final String TITLE               = "Project Dungeoncrawl";
 
-	public static final int SPRITEGRIDSIZE         = 32;
-	
-	public static final String CUSTOMFONTNAME      = "coders_crux";		               // name of the custom font
-	public static final String CUSTOMFONTEXTENSION = ".ttf";			               // file extension name
-	public static final String CUSTOMFONTFOLDER    = "coders_crux";		               // folder name within 'resources/fonts/'
+    public static final int CAMERA_WIDTH           = 9 * 32 + 19;
+    public static final int CAMERA_HEIGHT          = 5 * 32;
 
-	public static final int BASEFONTSIZE 		   = 8;						           // base font size used when rendering strings.
-	public static final int LINEHEIGHT			   = 2;						           
+    public static final int CAMERA_POSX            = 4 * 32 + 13;
+    public static final int CAMERA_POSY            = 0;
 
-	public static final int WORLD_WIDTH            = 10;
-	public static final int WORLD_HEIGHT           = 10;
-	
-	// ------------------------------
-	// DEBUG
-	
-	public static boolean drawGUIRects             = false;
-	public static final Color GUIDebugRectColor    = Color.green;
-	public static boolean drawCameraRect           = false;
-	public static final Color cameraRectColor      = Color.red;
-	public static boolean drawItemRects            = false;
-	public static final Color itemRectColor        = Color.red;
-	
-	public static boolean renderMinimap            = true;
-	
-	public static final boolean drawDebugInfo      = true;
-	public static final Color debugInfoColor       = Color.green;
-	
-	// -----------------------------
-	
-	private float deltaTime = 0;
-	
-	private Thread thread;
-	private boolean isRunning = false;
-	private Window window;
+    public static final int CAMERAZOOM             = 1;                                // level of zoom
+    public static final double FRAME_CAP           = 60.0;                             // cap the framerate to this
 
-	private Font customFont;
-	private Camera camera;
-	private SpriteCreator spriteCreator;
-	private Handler handler;
-	private GUIRenderer guiRenderer;
-	private GameState gamestate;
-	
-	private List<GuiString> guiStrings;
-	private List<GuiElement> guiElements;
-	
-	private World world;
-	private ActorManager actorManager;
-	private Minimap minimap;
-	private Point mousePos;
-	
-	public Game() {
+    public static final String SPRITESHEETNAME     = "images/UI_mockup.png";           // name of the spritesheet
+    public static final String FRAMICONPATH        = "resources/images/icon.png";      // path to frame icon.
 
-		if(instance != null) return;
-		Game.instance = this;
+    public static final int SPRITEGRIDSIZE         = 32;
 
-		// create object handler
-		this.handler = new Handler();
-		
-		// create key listener for inputs.
-		this.addKeyListener(new KeyInput());
+    public static final String CUSTOMFONTNAME      = "coders_crux";		               // name of the custom font
+    public static final String CUSTOMFONTEXTENSION = ".ttf";			               // file extension name
+    public static final String CUSTOMFONTFOLDER    = "coders_crux";		               // folder name within 'resources/fonts/'
 
-		// create mouse input object
-		MouseInput mouseInput = new MouseInput();
+    public static final int BASEFONTSIZE 		   = 8;						           // base font size used when rendering strings.
+    public static final int LINEHEIGHT			   = 2;						           
 
-		// create mouse listener
-		this.addMouseMotionListener(mouseInput);
-		this.addMouseListener(mouseInput);
-		
-		// load custom font
-		Util.loadCustomFont();
-		
-		// create window 
-		this.window = new Window(WIDTH * SCREEN_MULTIPLIER, HEIGHT * SCREEN_MULTIPLIER, TITLE, this);
+    public static final int WORLD_WIDTH            = 10;
+    public static final int WORLD_HEIGHT           = 10;
 
-		// create sprite creator
-		this.spriteCreator = new SpriteCreator(SPRITESHEETNAME);
+    // ------------------------------
+    // DEBUG
 
-		// create guiRenderer
-		this.guiRenderer = new GUIRenderer();
-		
+    public static boolean drawGUIRects             = false;
+    public static final Color GUIDebugRectColor    = Color.green;
+    public static boolean drawCameraRect           = false;
+    public static final Color cameraRectColor      = Color.red;
+    public static boolean drawItemRects            = false;
+    public static final Color itemRectColor        = Color.red;
+
+    public static boolean renderMinimap            = true;
+
+    public static final boolean drawDebugInfo      = true;
+    public static final Color debugInfoColor       = Color.green;
+
+    // -----------------------------
+
+    private float deltaTime = 0;
+
+    private Thread thread;
+    private boolean isRunning = false;
+    private Window window;
+
+    private Font customFont;
+    private Camera camera;
+    private SpriteCreator spriteCreator;
+    private Handler handler;
+    private GUIRenderer guiRenderer;
+    private GameState gamestate;
+
+    private List<GuiString> guiStrings;
+    private List<GuiElement> guiElements;
+
+    private World world;
+    private ActorManager actorManager;
+    private Minimap minimap;
+    private Point mousePos;
+
+    public Game() {
+
+        if(instance != null) return;
+        Game.instance = this;
+
+        // create object handler
+        this.handler = new Handler();
+
+        // create key listener for inputs.
+        this.addKeyListener(new KeyInput());
+
+        // create mouse input object
+        MouseInput mouseInput = new MouseInput();
+
+        // create mouse listener
+        this.addMouseMotionListener(mouseInput);
+        this.addMouseListener(mouseInput);
+
+        // load custom font
+        Util.loadCustomFont();
+
+        // create window 
+        this.window = new Window(WIDTH * SCREEN_MULTIPLIER, HEIGHT * SCREEN_MULTIPLIER, TITLE, this);
+
+        // create sprite creator
+        this.spriteCreator = new SpriteCreator(SPRITESHEETNAME);
+
+        // create guiRenderer
+        this.guiRenderer = new GUIRenderer();
+
         // initiate sprite font
         this.guiRenderer.initiateAlphabets();
-		
+
         // load all gui sprites
         this.guiRenderer.loadGuiSprites();
         System.out.println("Loaded " + this.guiRenderer.guiSprites.size() + " gui sprites succesfully.");
-        
-		// create gui-elements
-		this.guiElements = GuiElementCreator.createGuiElements();
-		System.out.println("Created " + this.guiElements.size() + " GUI-elements.");
-		
-		// create gui-strings
-		this.guiStrings = GuiElementCreator.createGuiStrings();
-		System.out.println("Created " + this.guiStrings.size() + " gui strings.");
-		
-		// create camera
-		this.camera = new Camera();
-		
-		// create actor manager
-		setActorManager(new ActorManager());
-		
-		// set gamestate
-		this.gamestate = GameState.Ingame;
-		
-		// create world
-		this.world = new World(WORLD_WIDTH, WORLD_HEIGHT);
-		
-		System.out.println("Created world succesfully, tiles: " + this.world.getTiles().size());
-		
-		this.minimap = new Minimap();
-		
-		// debug: create item on screen
-		ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(500, 400), SpriteType.RedPotion, 32, 2);
-		ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(700, 400), SpriteType.RedPotion, 32, 2);
-		
-		// start game thread
-		Start();
-		
-		System.out.println("Game started succesfully!");
-	}
 
-	public synchronized void Start() {
-		thread = new Thread(this);
-		thread.start();
-		isRunning = true;
-	}
+        // create gui-elements
+        this.guiElements = GuiElementCreator.createGuiElements();
+        System.out.println("Created " + this.guiElements.size() + " GUI-elements.");
 
-	public synchronized void Stop() {
-		try {
-			thread.join();
-			isRunning = false;
-		} catch (Exception e) { e.printStackTrace(); }
-	}
+        // create gui-strings
+        this.guiStrings = GuiElementCreator.createGuiStrings();
+        System.out.println("Created " + this.guiStrings.size() + " gui strings.");
 
-	public void run() { 
-	    GameLoop();
-	}
-	
-	private void GameLoop() {
+        // create camera
+        this.camera = new Camera();
 
-		long lastTime = System.nanoTime();
-		double unprocessedTime = 0;
+        // create actor manager
+        setActorManager(new ActorManager());
 
-		int frames = 0;
-		long frameCounter = 0;
+        // set gamestate
+        this.gamestate = GameState.Ingame;
 
-		final double frameTime = 1 / FRAME_CAP;
-		final long SECOND = 1000000000L;
+        // create world
+        this.world = new World(WORLD_WIDTH, WORLD_HEIGHT);
 
-		boolean render = false;
-		long now = 0l, passedTime = 0l;
+        System.out.println("Created world succesfully, tiles: " + this.world.getTiles().size());
 
-		while(isRunning) {
+        this.minimap = new Minimap();
 
-			render = false;
+        // debug: create item on screen
+        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(500, 400), SpriteType.RedPotion, 32, 2);
+        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(700, 400), SpriteType.RedPotion, 32, 2);
 
-			now = System.nanoTime();
-			passedTime = now - lastTime;
-			lastTime = now;
+        // start game thread
+        Start();
 
-			unprocessedTime += passedTime / (double) SECOND;
-			frameCounter += passedTime;
+        System.out.println("Game started succesfully!");
+    }
 
-			while(unprocessedTime > frameTime) {
+    public synchronized void Start() {
+        thread = new Thread(this);
+        thread.start();
+        isRunning = true;
+    }
 
-				render = true;
-				unprocessedTime -= frameTime;
-				
-				tick();
+    public synchronized void Stop() {
+        try {
+            thread.join();
+            isRunning = false;
+        } catch (Exception e) { e.printStackTrace(); }
+    }
 
-				if(frameCounter >= SECOND) {
-					window.SetCustomTitle("FPS: " + frames);
-					frames = 0;
-					frameCounter = 0;
-					
-					// 1 nanosecond = 10^-9 --> 0.000000001 seconds
-					// 71531 ns = 0.000071531 seconds
-					deltaTime = (System.nanoTime() - now) * 0.000000001f;
-				}
-			}
+    public void run() { 
+        GameLoop();
+    }
 
-			// render the scene
-			if(isRunning && render) {
-				render();
-				frames++;
-			}
-		}
-	}
+    private void GameLoop() {
 
-	private void render() {
-		BufferStrategy bs = this.getBufferStrategy();
+        long lastTime = System.nanoTime();
+        double unprocessedTime = 0;
 
-		if(bs == null) {
-			this.createBufferStrategy(3);
-			return;
-		}
-		
-		Graphics g = bs.getDrawGraphics();
+        int frames = 0;
+        long frameCounter = 0;
 
-		// DRAW GRAPHICS HERE ---------------------------------
+        final double frameTime = 1 / FRAME_CAP;
+        final long SECOND = 1000000000L;
 
-		Renderer.preRender(g);
+        boolean render = false;
+        long now = 0l, passedTime = 0l;
 
-		// END DRAW -------------------------------------------
+        while(isRunning) {
 
-		g.dispose();
-		bs.show();
-	}
+            render = false;
 
-	private void tick() { handler.tick(); }
-	public static void main(String args[]) { new Game(); }
-	public Window getWindow() { return this.window; }
-	public Font getCustomFont() { return customFont; }
-	public void setCustomFont(Font customFont) { this.customFont = customFont; }
+            now = System.nanoTime();
+            passedTime = now - lastTime;
+            lastTime = now;
+
+            unprocessedTime += passedTime / (double) SECOND;
+            frameCounter += passedTime;
+
+            while(unprocessedTime > frameTime) {
+
+                render = true;
+                unprocessedTime -= frameTime;
+
+                tick();
+
+                if(frameCounter >= SECOND) {
+                    window.SetCustomTitle("FPS: " + frames);
+                    frames = 0;
+                    frameCounter = 0;
+
+                    // 1 nanosecond = 10^-9 --> 0.000000001 seconds
+                    // 71531 ns = 0.000071531 seconds
+                    deltaTime = (System.nanoTime() - now) * 0.000000001f;
+                }
+            }
+
+            // render the scene
+            if(isRunning && render) {
+                render();
+                frames++;
+            }
+        }
+    }
+
+    private void render() {
+        BufferStrategy bs = this.getBufferStrategy();
+
+        if(bs == null) {
+            this.createBufferStrategy(3);
+            return;
+        }
+
+        Graphics g = bs.getDrawGraphics();
+
+        // DRAW GRAPHICS HERE ---------------------------------
+
+        Renderer.preRender(g);
+
+        // END DRAW -------------------------------------------
+
+        g.dispose();
+        bs.show();
+    }
+
+    private void tick() { handler.tick(); }
+    public static void main(String args[]) { new Game(); }
+    public Window getWindow() { return this.window; }
+    public Font getCustomFont() { return customFont; }
+    public void setCustomFont(Font customFont) { this.customFont = customFont; }
     public Camera getCamera() { return camera; }
     public void setCamera(Camera camera) { this.camera = camera; }
     public SpriteCreator getSpriteCreator() { return spriteCreator;}
@@ -339,5 +339,5 @@ public class Game extends Canvas implements Runnable {
     public void setMinimap(Minimap minimap) {
         this.minimap = minimap;
     }
-	
+
 }

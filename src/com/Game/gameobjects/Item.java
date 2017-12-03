@@ -13,7 +13,7 @@ public class Item extends GameObject {
 
     private ItemType itemType;
     private String name;
-    
+
     public Item(String name, ItemType itemType, Coordinate pos, SpriteType spriteType, int spriteSize, int spriteSizeMult) {
         super(pos, spriteType, spriteSize, spriteSizeMult);
         this.itemType = itemType;
@@ -44,13 +44,13 @@ public class Item extends GameObject {
     public void inspect() {
         System.out.println("Inspect: " + this.GetInfo());
     }
-    
+
     public String GetInfo() {
         String s = super.GetInfo();
         s += " name: " + this.name;
         return s;
     }
-    
+
     public ItemType getItemType() {
         return itemType;
     }

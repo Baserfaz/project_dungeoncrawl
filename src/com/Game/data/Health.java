@@ -5,7 +5,7 @@ public class Health {
     private int currentHP;
     private int maxHP = 100;
     private boolean isDead = false;
-    
+
     public Health() {
         this.setCurrentHP(maxHP);
     }
@@ -14,12 +14,12 @@ public class Health {
         this.setCurrentHP(currentHP - amount);
         if(currentHP <= 0) { setDead(true); }
     }
-    
+
     public void healDamage(int amount) {
         this.setCurrentHP(currentHP + amount);
         if(currentHP > maxHP) currentHP = maxHP;
     }
-    
+
     public int getCurrentHP() {
         return currentHP;
     }
@@ -35,5 +35,5 @@ public class Health {
     public void setDead(boolean isDead) {
         this.isDead = isDead;
     }
-    
+
 }

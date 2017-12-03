@@ -7,12 +7,12 @@ public class Tile {
 
     private TileType tileType;
     private Coordinate position;
-    
+
     public Tile(int x, int y, TileType tileType) {
         this.tileType = tileType;
         this.position = new Coordinate(x, y);
     }
-    
+
     public Tile(Coordinate pos, TileType tileType) {
         this.tileType = tileType;
         this.position = pos;
@@ -33,5 +33,5 @@ public class Tile {
     public void setPosition(Coordinate position) {
         this.position = position;
     }
-    
+
 }

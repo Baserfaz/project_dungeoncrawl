@@ -15,60 +15,60 @@ import com.Game.enumerations.CursorMode;
 
 public class Window extends Canvas {
 
-	private static final long serialVersionUID = 351245801233048538L;
+    private static final long serialVersionUID = 351245801233048538L;
 
-	private String title;
-	private JFrame frame;
+    private String title;
+    private JFrame frame;
 
-	public Window(int width, int height, String title, Game game) {
+    public Window(int width, int height, String title, Game game) {
 
-		this.title = title;
+        this.title = title;
 
-		// create a new frame
-		frame = new JFrame(title);
+        // create a new frame
+        frame = new JFrame(title);
 
-		// set cursor
-		setCursor(CursorMode.Default);
-		
-		// add window borders
-		int actualHeight = height + 25;
-		int actualWidth = width + 5;
-		
-		Dimension dim = new Dimension(actualWidth, actualHeight);
-		
-		// set the dimensions of the frame
-		frame.setPreferredSize(dim);
-		frame.setMinimumSize(dim);
-		frame.setMaximumSize(dim);
+        // set cursor
+        setCursor(CursorMode.Default);
 
-		// set closing operation
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // add window borders
+        int actualHeight = height + 25;
+        int actualWidth = width + 5;
 
-		// set if the frame is resizeable
-		frame.setResizable(false);
+        Dimension dim = new Dimension(actualWidth, actualHeight);
 
-		// set the location
-		frame.setLocationRelativeTo(null);
+        // set the dimensions of the frame
+        frame.setPreferredSize(dim);
+        frame.setMinimumSize(dim);
+        frame.setMaximumSize(dim);
 
-		// set frame icon
-		ImageIcon icon = new ImageIcon(Game.FRAMICONPATH);
-		frame.setIconImage(icon.getImage());
+        // set closing operation
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// add our game to the frame
-		frame.add(game);
+        // set if the frame is resizeable
+        frame.setResizable(false);
 
-		// pack the frame
-		frame.pack();
+        // set the location
+        frame.setLocationRelativeTo(null);
 
-		// set the frame to be visible.
-		frame.setVisible(true);
-	}
+        // set frame icon
+        ImageIcon icon = new ImageIcon(Game.FRAMICONPATH);
+        frame.setIconImage(icon.getImage());
 
-	public void setCursor(CursorMode mode) {
-	    
+        // add our game to the frame
+        frame.add(game);
+
+        // pack the frame
+        frame.pack();
+
+        // set the frame to be visible.
+        frame.setVisible(true);
+    }
+
+    public void setCursor(CursorMode mode) {
+
         Image img = null;
-	    
-	    switch(mode) {
+
+        switch(mode) {
         case Attack:
             img = Toolkit.getDefaultToolkit().getImage("./resources/images/cursor.png");
             break;
@@ -83,26 +83,26 @@ public class Window extends Canvas {
             break;
         default:
             break;
-	    }
-	    
+        }
+
         // create custom cursor
         Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(img, new Point(0,0), "customCursor");
-        
+
         // set cursor
         frame.getContentPane().setCursor(cursor);
-	}
-	
-	public void setCursor(String imgPath) {
+    }
+
+    public void setCursor(String imgPath) {
         // create cursor image
         Image img = Toolkit.getDefaultToolkit().getImage(imgPath);
-        
+
         // create custom cursor
         Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(img, new Point(0,0), "customCursor");
-        
+
         // set cursor
         frame.getContentPane().setCursor(cursor);
-	}
-	
-	public JFrame getFrame() { return this.frame; }
-	public void SetCustomTitle(String text) { frame.setTitle(title + ", " + text); }
+    }
+
+    public JFrame getFrame() { return this.frame; }
+    public void SetCustomTitle(String text) { frame.setTitle(title + ", " + text); }
 }

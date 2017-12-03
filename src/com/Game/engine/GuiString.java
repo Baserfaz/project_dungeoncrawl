@@ -10,7 +10,7 @@ public class GuiString {
     private int y;
     private Color color;
     private GUIRenderer guiRenderer;
-    
+
     public GuiString(String txt, int x, int y, Color color) {
         this.text = txt;
         this.x = x;
@@ -18,11 +18,11 @@ public class GuiString {
         this.color = color;
         this.guiRenderer = Game.instance.getGuiRenderer();
     }
-    
+
     public void tick() {
         // some cool animations here
     }
-    
+
     public void render(Graphics g) {
         this.guiRenderer.renderText(g, this.text, this.x, this.y, Game.SCREEN_MULTIPLIER, this.color);
     }
@@ -58,5 +58,5 @@ public class GuiString {
     public void setColor(Color color) {
         this.color = color;
     }
-    
+
 }

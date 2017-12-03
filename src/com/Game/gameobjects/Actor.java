@@ -16,23 +16,23 @@ public class Actor extends GameObject {
     private Inventory inv;
     private Direction lookDir;
     private boolean isMoving = false;
-    
+
     public Actor(Coordinate pos, SpriteType spriteType, int spriteSize, int spriteSizeMult) {
         super(pos, spriteType, spriteSize, spriteSizeMult);
         setHP(new Health());
         this.inv = new Inventory();
         setLookDir(Direction.East);
     }
-    
+
     public void tick() {
-       if(HP.isDead()) {
-           // TODO. die
-       } else {
-           
-           // move the actor
-           this.move();
-           
-       }
+        if(HP.isDead()) {
+            // TODO. die
+        } else {
+
+            // move the actor
+            this.move();
+
+        }
     }
 
     public void render(Graphics g) {
@@ -46,7 +46,7 @@ public class Actor extends GameObject {
     public void move() {
 
     }
-    
+
     public Health getHP() {
         return HP;
     }

@@ -13,7 +13,7 @@ import com.Game.utilities.Coordinate;
 
 public class RenderUtils {
 
- // render with 90 degree rotation 
+    // render with 90 degree rotation 
     public static void RenderSprite(BufferedImage sprite, Coordinate pos, Direction dir, Graphics g) {
 
         double angle = 0.0;
@@ -32,7 +32,7 @@ public class RenderUtils {
 
         int spriteWidth = sprite.getWidth();
         int spriteHeight = sprite.getHeight();
-        
+
         double rot = Math.toRadians(angle);
         int x = pos.x;
         int y = pos.y;
@@ -46,10 +46,10 @@ public class RenderUtils {
     }
 
     public static void renderButton(String txt, Coordinate pos, 
-        Coordinate size, Color fontCol, Color rectColor, int fontSize, boolean fill, Graphics2D g2d) {
+            Coordinate size, Color fontCol, Color rectColor, int fontSize, boolean fill, Graphics2D g2d) {
 
         int calc_fontsize = fontSize * 2 - 4;
-        
+
         // font
         Font font = new Font(Game.instance.getCustomFont().getFontName(), Font.PLAIN, calc_fontsize);
 
@@ -83,7 +83,7 @@ public class RenderUtils {
     public static void FillRectWithImage(Rectangle rect, Graphics g, Image img) {
         g.drawImage(img, rect.x, rect.y, rect.width, rect.height, null);
     }
-     
+
     public static void RenderSpriteWithBorder(BufferedImage sprite, Coordinate pos, Graphics g, Color borderColor) {
         BufferedImage img = Util.highlightTileBorders(sprite, borderColor);
         g.drawImage(img, pos.x, pos.y, sprite.getWidth(), sprite.getHeight(), null);
@@ -98,7 +98,7 @@ public class RenderUtils {
     public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) { 
         g.drawImage(sprite, pos.x, pos.y, sprite.getWidth(), sprite.getHeight(), null);
     }
-    
+
     public static Rectangle renderRect(Coordinate pos, Coordinate size, Color borderColor, Color fillColor, boolean fill, Graphics g2d) {
         // positions
         int y = pos.y;
@@ -139,5 +139,5 @@ public class RenderUtils {
             g2d.drawString(line, x, y);
         }
     }
-    
+
 }

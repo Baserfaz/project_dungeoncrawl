@@ -11,29 +11,29 @@ import com.Game.enumerations.GameState;
 
 public class KeyInput extends KeyAdapter {
 
-	private List<Integer> buttons = new ArrayList<Integer>();
-	
-	public KeyInput() {}
+    private List<Integer> buttons = new ArrayList<Integer>();
 
-	public void keyPressed(KeyEvent e) {
-	    
-	    // get the pressed key 
+    public KeyInput() {}
+
+    public void keyPressed(KeyEvent e) {
+
+        // get the pressed key 
         int key = e.getKeyCode();
-    
+
         // if the key event already exists, dont do anything.
         if(buttons.contains(key)) return;
-        
+
         // add pressed button to a list of buttons
         buttons.add(key);
-	    
+
         // -------------- HANDLE INPUTS ------------------
-        
+
         if(Game.instance.getGamestate() == GameState.Menu) {
             handleKeysInMenu(e);
         } else if(Game.instance.getGamestate() == GameState.Ingame) {
             handleKeysInGame(e);
         }
-        
+
         // debugging keys
         if(key == KeyEvent.VK_F1) {
             if(Game.drawGUIRects) Game.drawGUIRects = false;
@@ -50,23 +50,23 @@ public class KeyInput extends KeyAdapter {
             if(Game.renderMinimap) Game.renderMinimap = false;
             else Game.renderMinimap = true;
         }
-        
-	}
+
+    }
 
     public void keyReleased(KeyEvent e) {
-        
+
         // get the pressed key 
         int key = e.getKeyCode();
-        
+
         // remove all occurrences of key code from buttons
         buttons.removeAll(Arrays.asList(key));
     }
 
     private void handleKeysInGame(KeyEvent e) {
-		int key = e.getKeyCode();
-	}
-    
-	private void handleKeysInMenu(KeyEvent e) {
+        int key = e.getKeyCode();
+    }
+
+    private void handleKeysInMenu(KeyEvent e) {
         int key = e.getKeyCode();   
     }
 }

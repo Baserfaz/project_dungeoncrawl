@@ -16,7 +16,7 @@ public class GuiElement {
     private boolean visible;
     private boolean highlighted;
     private GUIElementType type;
-    
+
     public GuiElement(String name, boolean enabled, boolean visible, GUIElementType type, Rectangle rect, BufferedImage img) {
         this.rect = rect;
         this.img = img;
@@ -29,19 +29,19 @@ public class GuiElement {
 
     public void onClick() {
         System.out.println("Clicked " + this.name);
-        
+
         if(this.type == GUIElementType.Button) {
-            
+
         }
-        
+
     }
-    
+
     public void unhighlight() {
         if(this.highlighted) {
             setImg(this.tempImg);
         }
     }
-    
+
     public void highlight() {
         if(this.type == GUIElementType.Button) {
             setTempImg(this.img);
@@ -50,7 +50,7 @@ public class GuiElement {
             setHighlighted(true);
         }
     }
-    
+
     public Rectangle getRect() {
         return rect;
     }
