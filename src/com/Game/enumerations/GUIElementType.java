@@ -1,5 +1,5 @@
 package com.Game.enumerations;
 
 public enum GUIElementType {
-    Button, Other
+    BUTTON, BACKGROUND, INVENTORY_SLOT, OTHER, EQUIPMENT_SLOT
 }

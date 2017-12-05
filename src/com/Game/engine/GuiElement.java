@@ -12,12 +12,14 @@ public class GuiElement {
     private BufferedImage img;
     private BufferedImage tempImg;
     private String name;
+    private Color color;
     private boolean enabled;
     private boolean visible;
     private boolean highlighted;
     private GUIElementType type;
+    private boolean enableColorManipulation;
 
-    public GuiElement(String name, boolean enabled, boolean visible, GUIElementType type, Rectangle rect, BufferedImage img) {
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GUIElementType type, Rectangle rect, BufferedImage img) {
         this.rect = rect;
         this.img = img;
         this.name = name;
@@ -25,12 +27,25 @@ public class GuiElement {
         this.type = type;
         this.visible = visible;
         this.highlighted = false;
+        this.enableColorManipulation = enableColorManipulation;
     }
 
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GUIElementType type, Rectangle rect, Color color) {
+        this.rect = rect;
+        this.img = null;
+        this.name = name;
+        this.enabled = enabled;
+        this.type = type;
+        this.visible = visible;
+        this.highlighted = false;
+        this.color = color;
+        this.enableColorManipulation = enableColorManipulation;
+    }
+    
     public void onClick() {
         System.out.println("Clicked " + this.name);
 
-        if(this.type == GUIElementType.Button) {
+        if(this.type == GUIElementType.BUTTON) {
 
         }
 
@@ -43,7 +58,7 @@ public class GuiElement {
     }
 
     public void highlight() {
-        if(this.type == GUIElementType.Button) {
+        if(this.type == GUIElementType.BUTTON) {
             setTempImg(this.img);
             BufferedImage img = Util.tintWithColor(this.img, Color.black);
             setImg(img);
@@ -113,5 +128,21 @@ public class GuiElement {
 
     public void setHighlighted(boolean highlighted) {
         this.highlighted = highlighted;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public boolean isEnableColorManipulation() {
+        return enableColorManipulation;
+    }
+
+    public void setEnableColorManipulation(boolean enableColorManipulation) {
+        this.enableColorManipulation = enableColorManipulation;
     }
 }

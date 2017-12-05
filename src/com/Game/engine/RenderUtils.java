@@ -99,19 +99,22 @@ public class RenderUtils {
         g.drawImage(sprite, pos.x, pos.y, sprite.getWidth(), sprite.getHeight(), null);
     }
 
-    public static Rectangle renderRect(Coordinate pos, Coordinate size, Color borderColor, Color fillColor, boolean fill, Graphics g2d) {
+    public static Rectangle renderRect(Rectangle rect, boolean isFilled, boolean hasBorder, Color borderColor, Color fillColor, Graphics g2d) {
         // positions
-        int y = pos.y;
-        int x = pos.x;
-        int width = size.x;
-        int height = size.y;
+        int y = rect.y;
+        int x = rect.x;
+        int width = rect.width;
+        int height = rect.height;
 
-        // set color for the border
-        g2d.setColor(borderColor);
-
-        // render rectangle and fill it
-        g2d.drawRect(x, y, width, height);
-        if(fill) { 
+        if(hasBorder) {
+            // set color for the border
+            g2d.setColor(borderColor);
+    
+            // render rectangle and fill it
+            g2d.drawRect(x, y, width, height);
+        }
+        
+        if(isFilled) { 
             g2d.setColor(fillColor);
             g2d.fillRect(x, y, width, height); 
         }

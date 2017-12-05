@@ -15,6 +15,7 @@ import com.Game.engine.Util;
 import com.Game.engine.Window;
 import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
+import com.Game.enumerations.GuiSpriteType;
 import com.Game.enumerations.ItemType;
 import com.Game.enumerations.SpriteType;
 import com.Game.utilities.ActorManager;
@@ -59,6 +60,8 @@ public class Game extends Canvas implements Runnable {
     public static final int WORLD_WIDTH            = 10;
     public static final int WORLD_HEIGHT           = 10;
 
+    public static boolean renderMinimap            = false;
+    
     // ------------------------------
     // DEBUG
 
@@ -68,8 +71,6 @@ public class Game extends Canvas implements Runnable {
     public static final Color cameraRectColor      = Color.red;
     public static boolean drawItemRects            = false;
     public static final Color itemRectColor        = Color.red;
-
-    public static boolean renderMinimap            = true;
 
     public static final boolean drawDebugInfo      = true;
     public static final Color debugInfoColor       = Color.green;
@@ -132,7 +133,7 @@ public class Game extends Canvas implements Runnable {
 
         // load all gui sprites
         this.guiRenderer.loadGuiSprites();
-        System.out.println("Loaded " + this.guiRenderer.guiSprites.size() + " gui sprites succesfully.");
+        System.out.println("Loaded " + this.guiRenderer.guiSprites.size() + "/" + GuiSpriteType.values().length + " gui sprites succesfully.");
 
         // create gui-elements
         this.guiElements = GuiElementCreator.createGuiElements();
