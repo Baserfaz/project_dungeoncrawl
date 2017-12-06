@@ -65,7 +65,6 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 
         // on which mouse button click
         if(e.getButton() == MouseEvent.BUTTON1) {
-            System.out.println("Left click released at " + pos);
 
             List<GuiElement> stackedElements = new ArrayList<GuiElement>();
 
@@ -83,9 +82,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             }
 
         } else if(e.getButton() == MouseEvent.BUTTON2) {
-            System.out.println("Middle mouse released click at " + pos);
         } else if(e.getButton() == MouseEvent.BUTTON3 ) {
-            System.out.println("Right click released at " + pos);
         }
     }
 
@@ -100,7 +97,6 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 
         // on which mouse button click
         if(e.getButton() == MouseEvent.BUTTON1) {
-            System.out.println("Left click at " + pos);
 
             // set dragging cursor
             Game.instance.getWindow().setCursor(CursorMode.Dragging);
@@ -116,7 +112,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             }
 
             for(Item item : items) {
-                if(item.GetBounds().contains(point)) {
+                if(item.getBounds().contains(point)) {
                     stackedItems.add(item);
                 }
             }
@@ -135,9 +131,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             }
 
         } else if(e.getButton() == MouseEvent.BUTTON2) {
-            System.out.println("Middle mouse click at " + pos);
         } else if(e.getButton() == MouseEvent.BUTTON3 ) {
-            System.out.println("Right click at " + pos);
 
             // set inspection cursor
             Game.instance.getWindow().setCursor(CursorMode.Inspect);
@@ -146,7 +140,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 
             // which item was clicked
             for(Item item : items) {
-                if(item.GetBounds().contains(point)) {
+                if(item.getBounds().contains(point)) {
                     stackedItems.add(item);
                 }
             }

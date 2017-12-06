@@ -3,17 +3,23 @@ package com.Game.engine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Game.data.Energy;
+import com.Game.data.Health;
+import com.Game.data.Mana;
 import com.Game.enumerations.GuiSpriteType;
+import com.Game.gameobjects.Actor;
+import com.Game.utilities.Coordinate;
 import com.Game.utilities.SpriteCreator;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class GUIRenderer {
+public class GuiRenderer {
 
     public Map<Character, BufferedImage> alphabets = new HashMap<Character, BufferedImage>(); 
     public Map<GuiSpriteType, BufferedImage> guiSprites = new HashMap<GuiSpriteType, BufferedImage>();
@@ -23,7 +29,6 @@ public class GUIRenderer {
         // refs
         Graphics2D g2d = (Graphics2D) g;
         List<GuiElement> elements = Game.instance.getGuiElements();
-        List<GuiString> strings = Game.instance.getGuiStrings();
 
         // render all GUI-elements
         for(GuiElement element : elements) {
@@ -51,11 +56,11 @@ public class GUIRenderer {
             }
         }
 
-        // render text after the GUIElements.
-        for(GuiString string : strings) {
-            string.tick();
-            string.render(g);
-        }
+        // render hp, mana and energy gems
+        // and also equipment and inventory slots.
+        renderStats(g);
+        renderEquipmentSlots(g);
+        renderInventorySlots(g);
 
         // render minimap
         if(Game.renderMinimap) {
@@ -63,6 +68,96 @@ public class GUIRenderer {
         }
     }   
 
+    private void renderInventorySlots(Graphics g) {
+        
+    }
+    
+    private void renderEquipmentSlots(Graphics g) {
+        for(GuiElement element : Game.instance.getEquipmentSlots()) {
+            RenderUtils.FillRectWithImage(element.getRect(), g, element.getImg());
+        }
+    }
+    
+    private void renderStats(Graphics g) {
+        
+        // cache player instance
+        Actor player = Game.instance.getActorManager().getPlayerInstance();
+        if(player == null) return;
+        
+        Health hp = player.getHP();
+        Energy energy = player.getEnergy();
+        Mana mp = player.getMP();
+        
+        // load player data
+        int maxHP = hp.getMaxHP();
+        int currentHP = hp.getCurrentHP();
+        
+        int maxMP = mp.getMaxMana();
+        int currentMP = mp.getCurrentMana();
+        
+        int maxEnergy = energy.getMaxEnergy();
+        int currentEnergy = energy.getCurrentEnergy();
+        
+        // hardcoded start positions for the gems
+        int posx = 52 * Game.SCREEN_MULTIPLIER;
+        int hpGemPosy = 177 * Game.SCREEN_MULTIPLIER;
+        int energyGemPosy = 187 * Game.SCREEN_MULTIPLIER;
+        int manaGemPosy = 197 * Game.SCREEN_MULTIPLIER;
+        
+        int gemWidth = 7 * Game.SCREEN_MULTIPLIER; 
+        int margin = 1 * Game.SCREEN_MULTIPLIER;
+        
+        
+        // create HP gems
+        for(int i = 0; i < maxHP; i++) {
+            
+            // calculate new position for each gem
+            Coordinate pos = new Coordinate(posx + gemWidth * i + margin * i, hpGemPosy);
+            
+            if(currentHP > i) {
+                // create full gem
+                RenderUtils.RenderSprite(guiSprites.get(GuiSpriteType.FULL_HP_GEM), pos, g);
+            } else {
+                // create empty gem
+                RenderUtils.RenderSprite(guiSprites.get(GuiSpriteType.EMPTY_GEM), pos, g);
+            }
+        }
+        
+        // create energy gems
+        for(int i = 0; i < maxEnergy; i++) {
+            
+            // calculate new position for each gem
+            Coordinate pos = new Coordinate(posx + gemWidth * i + margin * i, energyGemPosy);
+            
+            if(currentEnergy > i) {
+                // create full gem
+                RenderUtils.RenderSprite(guiSprites.get(GuiSpriteType.FULL_ENERGY_GEM), pos, g);
+            } else {
+                // create empty gem
+                RenderUtils.RenderSprite(guiSprites.get(GuiSpriteType.EMPTY_GEM), pos, g);
+            }
+        }
+        
+        // create mana gems
+        for(int i = 0; i < maxMP; i++) {
+            
+            // calculate new position for each gem
+            Coordinate pos = new Coordinate(posx + gemWidth * i + margin * i, manaGemPosy);
+            
+            if(currentMP > i) {
+                // create full gem
+                RenderUtils.RenderSprite(guiSprites.get(GuiSpriteType.FULL_MANA_GEM), pos, g);
+            } else {
+                // create empty gem
+                RenderUtils.RenderSprite(guiSprites.get(GuiSpriteType.EMPTY_GEM), pos, g);
+            }
+        }
+        
+        // draw name, level and class
+        Game.instance.getActorManager().getPlayerNameString().render(g);
+        
+    }
+    
     public void loadGuiSprites() {
 
         // cache sprite creator
@@ -82,10 +177,10 @@ public class GUIRenderer {
             case HALF_HP_GEM:
                 img = creator.CreateCustomSizeSprite(2 * 7, 9 * 32, 7, 8, Game.SCREEN_MULTIPLIER);
                 break;
-            case FULL_STAMINA_GEM:
+            case FULL_ENERGY_GEM:
                 img = creator.CreateCustomSizeSprite(3 * 7, 9 * 32, 7, 8, Game.SCREEN_MULTIPLIER);
                 break;
-            case HALF_STAMINA_GEM:
+            case HALF_ENERGY_GEM:
                 img = creator.CreateCustomSizeSprite(4 * 7, 9 * 32, 7, 8, Game.SCREEN_MULTIPLIER);
                 break;
             case FULL_MANA_GEM:
@@ -113,7 +208,7 @@ public class GUIRenderer {
                 img = creator.CreateCustomSizeSprite(66, 318, 32, 33, Game.SCREEN_MULTIPLIER);
                 break;
             case EQUIP_SLOT_SMALL:
-                img = creator.CreateCustomSizeSprite(3 * 32 + 2, 10 * 32, 16, 17, Game.SCREEN_MULTIPLIER);
+                img = creator.CreateCustomSizeSprite(98, 318, 16, 17, Game.SCREEN_MULTIPLIER);
                 break;
                 
             case REST:
@@ -247,6 +342,20 @@ public class GUIRenderer {
         }
     }
 
+    public List<BufferedImage> createText(String txt) {
+        List<BufferedImage> imgs = new ArrayList<BufferedImage>();
+        txt = txt.toLowerCase();
+        for(char c : txt.toCharArray()) {
+            if(this.alphabets.containsKey(c)) {
+                imgs.add(this.alphabets.get(c));
+            } else {
+                System.out.println("System doesn't support character: " + c);
+                continue;
+            }
+        }
+        return imgs;
+    }
+    
     public void renderText(Graphics g, String txt, int x, int y, int margin, Color color) {
         int currentMargin = 0;
         txt = txt.toLowerCase();

@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.Game.enumerations.GUIElementType;
+import com.Game.enumerations.GuiElementType;
 import com.Game.enumerations.GuiSpriteType;
+import com.Game.gameobjects.Actor;
 import com.Game.utilities.Coordinate;
 
 public class GuiElementCreator {
@@ -22,30 +23,34 @@ public class GuiElementCreator {
         
         // bottom background
         Rectangle bottomBackground = new Rectangle(0, 5 * 32 * Game.SCREEN_MULTIPLIER, 14 * 32 * Game.SCREEN_MULTIPLIER, 3 * 32 * Game.SCREEN_MULTIPLIER);
-        elements.add(new GuiElement("bottomBackground", false, true, false, GUIElementType.BACKGROUND, bottomBackground, new Color(75, 86, 99, 255)));
+        elements.add(new GuiElement("bottomBackground", false, true, false, GuiElementType.BACKGROUND, bottomBackground, new Color(75, 86, 99, 255)));
         
         // sidebar background
         Rectangle sidebarBackground = new Rectangle(0, 0, 141 * Game.SCREEN_MULTIPLIER, 8 * 32 * Game.SCREEN_MULTIPLIER);
-        elements.add(new GuiElement("sidebarBackground", false, true, false, GUIElementType.BACKGROUND, sidebarBackground, new Color(85, 98, 112, 255)));
+        elements.add(new GuiElement("sidebarBackground", false, true, false, GuiElementType.BACKGROUND, sidebarBackground, new Color(85, 98, 112, 255)));
         
         // cache sprite map
         Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiRenderer().guiSprites;
         
+        // these are created at run time and not here.
+        List<GuiSpriteType> dontCreateAtAll = Arrays.asList(GuiSpriteType.EMPTY_GEM, GuiSpriteType.FULL_HP_GEM, 
+                GuiSpriteType.FULL_MANA_GEM, GuiSpriteType.FULL_ENERGY_GEM, GuiSpriteType.HALF_HP_GEM,
+                GuiSpriteType.HALF_MANA_GEM, GuiSpriteType.HALF_ENERGY_GEM, GuiSpriteType.DISAGREE, GuiSpriteType.AGREE,
+                GuiSpriteType.EVENT_BAR, GuiSpriteType.ENEMY_BAR, GuiSpriteType.EQUIP_SLOT_BIG, GuiSpriteType.EQUIP_SLOT_SMALL,
+                GuiSpriteType.INV_SLOT_LEFT, GuiSpriteType.INV_SLOT_RIGHT);
+        
         // don't render these at start
-        List<GuiSpriteType> notWantedToRender = Arrays.asList(GuiSpriteType.EMPTY_GEM, GuiSpriteType.FULL_HP_GEM, 
-                GuiSpriteType.FULL_MANA_GEM, GuiSpriteType.FULL_STAMINA_GEM, GuiSpriteType.HALF_HP_GEM,
-                GuiSpriteType.HALF_MANA_GEM, GuiSpriteType.HALF_STAMINA_GEM, GuiSpriteType.LIGHT_CHARACTER, 
+        List<GuiSpriteType> notWantedToRender = Arrays.asList(GuiSpriteType.LIGHT_CHARACTER, 
                 GuiSpriteType.DARK_SPELLBOOK, GuiSpriteType.PRIMARY_STATS_DARK, GuiSpriteType.SECONDARY_STATS_LIGHT,
-                GuiSpriteType.INV_SLOT_LEFT, GuiSpriteType.INV_SLOT_RIGHT, GuiSpriteType.STATS_SECONDARY, 
-                GuiSpriteType.SPELLBOOK, GuiSpriteType.EQUIP_SLOT_BIG, GuiSpriteType.EQUIP_SLOT_SMALL,
-                GuiSpriteType.DISAGREE, GuiSpriteType.AGREE, GuiSpriteType.EVENT_BAR, GuiSpriteType.ENEMY_BAR);
+                GuiSpriteType.STATS_SECONDARY, GuiSpriteType.SPELLBOOK);
         
         // isClickable list
-        List<GuiSpriteType> isClickableElement = Arrays.asList(GuiSpriteType.ACTION_1, GuiSpriteType.ACTION_2, GuiSpriteType.AGREE, GuiSpriteType.BACKWARD,
-                GuiSpriteType.DARK_CHARACTER, GuiSpriteType.DISAGREE, GuiSpriteType.FORWARD,
-                GuiSpriteType.LIGHT_SPELLBOOK, GuiSpriteType.MAP, GuiSpriteType.MENU, GuiSpriteType.PRIMARY_STATS_DARK, GuiSpriteType.PRIMARY_STATS_LIGHT,
-                GuiSpriteType.REST, GuiSpriteType.SECONDARY_STATS_DARK, GuiSpriteType.SECONDARY_STATS_LIGHT, GuiSpriteType.STRAFE_LEFT, GuiSpriteType.STRAFE_RIGHT,
-                GuiSpriteType.TURN_LEFT, GuiSpriteType.TURN_RIGHT);
+        List<GuiSpriteType> isClickableElement = Arrays.asList(GuiSpriteType.ACTION_1, GuiSpriteType.ACTION_2, 
+                GuiSpriteType.AGREE, GuiSpriteType.BACKWARD, GuiSpriteType.DARK_CHARACTER, GuiSpriteType.DISAGREE,
+                GuiSpriteType.FORWARD, GuiSpriteType.LIGHT_SPELLBOOK, GuiSpriteType.MAP, GuiSpriteType.MENU, 
+                GuiSpriteType.PRIMARY_STATS_DARK, GuiSpriteType.PRIMARY_STATS_LIGHT, GuiSpriteType.REST,
+                GuiSpriteType.SECONDARY_STATS_DARK, GuiSpriteType.SECONDARY_STATS_LIGHT, GuiSpriteType.STRAFE_LEFT,
+                GuiSpriteType.STRAFE_RIGHT, GuiSpriteType.TURN_LEFT, GuiSpriteType.TURN_RIGHT);
         
         // background element
         List<GuiSpriteType> backgroundElements = Arrays.asList(GuiSpriteType.EQUIPMENT, GuiSpriteType.STATS_PRIMARY, 
@@ -59,25 +64,27 @@ public class GuiElementCreator {
         
         for(Entry<GuiSpriteType, BufferedImage> obj : sprites.entrySet()) {
 
+            if(dontCreateAtAll.contains(obj.getKey())) continue;
+            
             boolean isClickable = false;
             boolean isVisibleAtStart = true;
-            GUIElementType type = GUIElementType.OTHER;
+            GuiElementType type = GuiElementType.OTHER;
             
             if(isClickableElement.contains(obj.getKey())) {
                 isClickable = true;
-                type = GUIElementType.BUTTON;
+                type = GuiElementType.BUTTON;
             }
             
             if(backgroundElements.contains(obj.getKey())) {
-                type = GUIElementType.BACKGROUND;
+                type = GuiElementType.BACKGROUND;
             }
             
             if(inventorySlotElements.contains(obj.getKey())) {
-                type = GUIElementType.INVENTORY_SLOT;
+                type = GuiElementType.INVENTORY_SLOT;
             }
             
             if(equipmentSlotElements.contains(obj.getKey())) {
-                type = GUIElementType.EQUIPMENT_SLOT;
+                type = GuiElementType.EQUIPMENT_SLOT;
             }
             
             if(notWantedToRender.contains(obj.getKey())) {
@@ -94,9 +101,71 @@ public class GuiElementCreator {
         return elements;
     }
 
+    public static List<GuiElement> createInventorySlots() {
+        List<GuiElement> elements = new ArrayList<GuiElement>();
+        
+        // TODO
+        
+        return elements;
+    }
+    
+    public static GuiString createPlayerName() {
+        Actor player = Game.instance.getActorManager().getPlayerInstance();
+        if(player == null) return null;
+        return new GuiString(player.getName(), 15 * Game.SCREEN_MULTIPLIER, 152 * Game.SCREEN_MULTIPLIER, Color.white);
+    }
+    
+    public static GuiString createPlayerName(String name) {
+        return new GuiString(name, 15 * Game.SCREEN_MULTIPLIER, 152 * Game.SCREEN_MULTIPLIER, Color.white);
+    }
+    
+    public static List<GuiElement> createEquipmentSlots() {
+        List<GuiElement> elements = new ArrayList<GuiElement>();
+        
+        // cache sprite map
+        Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiRenderer().guiSprites;
+        
+        // get the sprites
+        BufferedImage bigSlotImg = sprites.get(GuiSpriteType.EQUIP_SLOT_BIG);
+        BufferedImage smallSlotImg = sprites.get(GuiSpriteType.EQUIP_SLOT_SMALL);
+        
+        // positions
+        Coordinate leftRing01 = new Coordinate(15 * Game.SCREEN_MULTIPLIER, 59 * Game.SCREEN_MULTIPLIER);
+        Coordinate leftRing02 = new Coordinate(32 * Game.SCREEN_MULTIPLIER, 59 * Game.SCREEN_MULTIPLIER);
+        Coordinate rightRing01 = new Coordinate(92 * Game.SCREEN_MULTIPLIER, 59 * Game.SCREEN_MULTIPLIER);
+        Coordinate rightRing02 = new Coordinate(109 * Game.SCREEN_MULTIPLIER, 59 * Game.SCREEN_MULTIPLIER);
+        Coordinate helmet = new Coordinate(54 * Game.SCREEN_MULTIPLIER, 43 * Game.SCREEN_MULTIPLIER);
+        Coordinate leftWep = new Coordinate(15 * Game.SCREEN_MULTIPLIER, 80 * Game.SCREEN_MULTIPLIER);
+        Coordinate armor = new Coordinate(54 * Game.SCREEN_MULTIPLIER, 80 * Game.SCREEN_MULTIPLIER);
+        Coordinate rightWep = new Coordinate(92 * Game.SCREEN_MULTIPLIER, 80 * Game.SCREEN_MULTIPLIER);
+        
+        // create rectangles
+        Rectangle rectLeftRing01 = new Rectangle(leftRing01.x, leftRing01.y, smallSlotImg.getWidth(), smallSlotImg.getHeight());
+        Rectangle rectLeftRing02 = new Rectangle(leftRing02.x, leftRing02.y, smallSlotImg.getWidth(), smallSlotImg.getHeight());
+        Rectangle rectHelmet = new Rectangle(helmet.x, helmet.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
+        Rectangle rectRightRing01 = new Rectangle(rightRing01.x, rightRing01.y, smallSlotImg.getWidth(), smallSlotImg.getHeight());
+        Rectangle rectRightRing02 = new Rectangle(rightRing02.x, rightRing02.y, smallSlotImg.getWidth(), smallSlotImg.getHeight());
+        Rectangle rectLeftWep = new Rectangle(leftWep.x, leftWep.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
+        Rectangle rectArmor = new Rectangle(armor.x, armor.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
+        Rectangle rectRightWep = new Rectangle(rightWep.x, rightWep.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
+        
+        // create + add gui elements
+        elements.add(new GuiElement("leftRing01", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing01, smallSlotImg));
+        elements.add(new GuiElement("leftRing02", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing02, smallSlotImg));
+        elements.add(new GuiElement("helmet", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectHelmet, bigSlotImg));
+        elements.add(new GuiElement("rightRing01", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing01, smallSlotImg));
+        elements.add(new GuiElement("rightRing02", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing02, smallSlotImg));
+        elements.add(new GuiElement("leftWeapon", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftWep, bigSlotImg));
+        elements.add(new GuiElement("armor", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectArmor, bigSlotImg));
+        elements.add(new GuiElement("rightWeapon", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightWep, bigSlotImg));
+        
+        return elements;
+    }
+    
     private static Coordinate getPosition(GuiSpriteType type) {
         
-        // this sets the starting positions of the gui elements
+        // helper function:
+        // sets the starting positions of the gui elements
         
         Coordinate coord = new Coordinate(0, 0);
         
@@ -205,14 +274,5 @@ public class GuiElementCreator {
         coord.y *= Game.SCREEN_MULTIPLIER;
         
         return coord;
-    }
-    
-    public static List<GuiString> createGuiStrings() {
-        List<GuiString> strings = new ArrayList<GuiString>();
-
-        // add all strings here.
-        //strings.add(new GuiString("Project Dungeoncrawl, version: pre-fetus.", 10, 10, new Color(50, 50, 50, 255)));
-
-        return strings;
     }
 }

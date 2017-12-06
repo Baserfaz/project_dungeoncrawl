@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.Game.engine.Game;
+import com.Game.engine.GuiElementCreator;
+import com.Game.engine.GuiString;
 import com.Game.enumerations.ActorType;
 import com.Game.enumerations.SpriteType;
 import com.Game.gameobjects.Actor;
@@ -13,21 +15,25 @@ public class ActorManager {
     private List<Actor> actorInstances;
     private Actor playerInstance;
 
+    private GuiString playerNameString;
+    
     public ActorManager() {
         actorInstances = new ArrayList<Actor>();
         setPlayerInstance(null);
     }
 
-    public Actor createActorInstance(Coordinate pos, SpriteType spriteType, int spriteSize, int spriteSizeMult, ActorType actorType) {
+    public Actor createActorInstance(String actorName, Coordinate worldPos, Coordinate tilePos, SpriteType spriteType, int spriteSize, 
+            int spriteSizeMult, ActorType actorType, int health, int mana, int energy) {
 
         Actor actor = null;
 
         if(actorType == ActorType.Player) {
-            actor = new Actor(pos, spriteType, spriteSize, spriteSizeMult);
+            actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
             playerInstance = actor;
             Game.instance.getCamera().setFollowTarget(actor);
+            playerNameString = GuiElementCreator.createPlayerName(actorName);
         } else if (actorType == ActorType.Enemy) {
-            actor = new Actor(pos, spriteType, spriteSize, spriteSizeMult);
+            actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
             actorInstances.add(actor);
         }
         return actor;
@@ -56,6 +62,14 @@ public class ActorManager {
 
     public void setPlayerInstance(Actor playerInstance) {
         this.playerInstance = playerInstance;
+    }
+
+    public GuiString getPlayerNameString() {
+        return playerNameString;
+    }
+
+    public void setPlayerNameString(GuiString playerNameString) {
+        this.playerNameString = playerNameString;
     }
 
 }

@@ -230,12 +230,12 @@ public class Util {
         }
 
         if(go != null) {
-            x = ((-go.GetWorldPosition().x * Game.CAMERAZOOM) - (spriteSize - Game.WIDTH / 2)) / Game.CAMERAZOOM;
-            y = ((-go.GetWorldPosition().y * Game.CAMERAZOOM) - (spriteSize - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
+            x = ((-go.getWorldPosition().x * Game.CAMERAZOOM) - (spriteSize - Game.WIDTH / 2)) / Game.CAMERAZOOM;
+            y = ((-go.getWorldPosition().y * Game.CAMERAZOOM) - (spriteSize - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
         } else {
             if(cam.getFollowTarget() != null) { 
-                x = ((-cam.getFollowTarget().GetWorldPosition().x * Game.CAMERAZOOM) - (spriteSize - Game.WIDTH / 2)) / Game.CAMERAZOOM;
-                y = ((-cam.getFollowTarget().GetWorldPosition().y * Game.CAMERAZOOM) - (spriteSize - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
+                x = ((-cam.getFollowTarget().getWorldPosition().x * Game.CAMERAZOOM) - (spriteSize - Game.WIDTH / 2)) / Game.CAMERAZOOM;
+                y = ((-cam.getFollowTarget().getWorldPosition().y * Game.CAMERAZOOM) - (spriteSize - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
             }
         }
 

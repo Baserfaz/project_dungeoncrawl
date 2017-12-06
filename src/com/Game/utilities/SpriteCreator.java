@@ -103,6 +103,8 @@ public class SpriteCreator {
 
     public BufferedImage CreateSprite(SpriteType type, int spriteSize, int spriteSizeMult) {	
 
+        if(spriteSize <= 0) return null;
+        
         BufferedImage sprite = new BufferedImage(spriteSize, spriteSize, BufferedImage.TYPE_INT_ARGB);
         int[] spritePixelData = new int[sprite.getWidth() * sprite.getHeight()];
 
@@ -149,9 +151,29 @@ public class SpriteCreator {
         Coordinate pos = new Coordinate(0, 0);
 
         switch(type) {
-        case RedPotion:
+        case RED_POTION_BIG:
             pos.x = 6;
             pos.y = 11;
+            break;
+        case RED_POTION_SMALL:
+            pos.x = 6;
+            pos.y = 12;
+            break;
+        case BLUE_POTION_BIG:
+            pos.x = 7;
+            pos.y = 11;
+            break;
+        case BLUE_POTION_SMALL:
+            pos.x = 7;
+            pos.y = 12;
+            break;
+        case EMPTY_POTION_BIG:
+            pos.x = 6;
+            pos.y = 13;
+            break;
+        case EMPTY_POTION_SMALL:
+            pos.x = 7;
+            pos.y = 13;
             break;
         default:
             break;

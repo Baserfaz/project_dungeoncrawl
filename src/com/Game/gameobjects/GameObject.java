@@ -11,17 +11,21 @@ import com.Game.utilities.Coordinate;
 public abstract class GameObject {
 
     protected Coordinate worldPosition;
+    protected Coordinate tilePosition;
     protected BufferedImage sprite;
     protected int spriteSize;
     protected int spriteSizeMult;
     protected int size;
     protected boolean dragging;
 
-    public GameObject(Coordinate worldPos, SpriteType type, int spriteSize, int spriteSizeMult) {
+    public GameObject(Coordinate worldPos, Coordinate tilePos, SpriteType type, int spriteSize, int spriteSizeMult) {
 
-        // create world coordinates
+        // set world position
         this.worldPosition = worldPos;
 
+        // set tile position
+        this.tilePosition = tilePos;
+        
         // cache sprite size & mult
         this.spriteSize = spriteSize;
         this.spriteSizeMult = spriteSizeMult;
@@ -36,19 +40,20 @@ public abstract class GameObject {
         Game.instance.getHandler().AddObject(this);
     }
 
-    public String GetInfo() {
-        return "GameObject: " + this.toString() + " worldPos: (" + this.GetWorldPosition().x + ", " + this.GetWorldPosition().y + ")";
+    public String getInfo() {
+        return "GameObject: " + this.toString() + " worldPos: (" + this.getWorldPosition().x + ", " + this.getWorldPosition().y + ")";
     }
 
     public abstract void tick();
     public abstract void render(Graphics g);
-    public abstract Rectangle GetBounds();
+    public abstract Rectangle getBounds();
 
-    public void SetSprite(BufferedImage i) { this.sprite = i; }
-    public BufferedImage GetSprite() { return this.sprite; }
-    public void SetWorldPosition(int x, int y) { this.worldPosition = new Coordinate(x, y); }
-    public void SetWorldPosition(Coordinate pos) { this.worldPosition = pos; }
-    public Coordinate GetWorldPosition() { return this.worldPosition; }
+    public void setSprite(BufferedImage i) { this.sprite = i; }
+    public BufferedImage getSprite() { return this.sprite; }
+    public void setWorldPosition(int x, int y) { this.worldPosition = new Coordinate(x, y); }
+    public void setWorldPosition(Coordinate pos) { this.worldPosition = pos; }
+    public Coordinate getWorldPosition() { return this.worldPosition; }
+    public Coordinate getTilePosition() { return this.tilePosition; }
     public boolean isDragging() { return dragging; }
     public void setDragging(boolean dragging) { this.dragging = dragging; }
 }

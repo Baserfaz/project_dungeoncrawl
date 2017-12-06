@@ -13,6 +13,7 @@ import com.Game.engine.Camera;
 import com.Game.engine.Renderer;
 import com.Game.engine.Util;
 import com.Game.engine.Window;
+import com.Game.enumerations.ActorType;
 import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
 import com.Game.enumerations.GuiSpriteType;
@@ -87,12 +88,13 @@ public class Game extends Canvas implements Runnable {
     private Camera camera;
     private SpriteCreator spriteCreator;
     private Handler handler;
-    private GUIRenderer guiRenderer;
+    private GuiRenderer guiRenderer;
     private GameState gamestate;
-
-    private List<GuiString> guiStrings;
+    
     private List<GuiElement> guiElements;
-
+    private List<GuiElement> equipmentSlots;
+    private List<GuiElement> inventorySlots;
+    
     private World world;
     private ActorManager actorManager;
     private Minimap minimap;
@@ -126,7 +128,7 @@ public class Game extends Canvas implements Runnable {
         this.spriteCreator = new SpriteCreator(SPRITESHEETNAME);
 
         // create guiRenderer
-        this.guiRenderer = new GUIRenderer();
+        this.guiRenderer = new GuiRenderer();
 
         // initiate sprite font
         this.guiRenderer.initiateAlphabets();
@@ -139,10 +141,14 @@ public class Game extends Canvas implements Runnable {
         this.guiElements = GuiElementCreator.createGuiElements();
         System.out.println("Created " + this.guiElements.size() + " GUI-elements.");
 
-        // create gui-strings
-        this.guiStrings = GuiElementCreator.createGuiStrings();
-        System.out.println("Created " + this.guiStrings.size() + " gui strings.");
-
+        // create equipment slot gui-elements
+        this.equipmentSlots = GuiElementCreator.createEquipmentSlots();
+        System.out.println("Created " + this.equipmentSlots.size() + " equipment slots.");
+        
+        // create inventory slots
+        this.inventorySlots = GuiElementCreator.createInventorySlots();
+        System.out.println("Created " + this.inventorySlots.size() + " inventory slots.");
+        
         // create camera
         this.camera = new Camera();
 
@@ -154,28 +160,31 @@ public class Game extends Canvas implements Runnable {
 
         // create world
         this.world = new World(WORLD_WIDTH, WORLD_HEIGHT);
-
         System.out.println("Created world succesfully, tiles: " + this.world.getTiles().size());
 
+        // create minimap
         this.minimap = new Minimap();
 
         // debug: create item on screen
-        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(500, 400), SpriteType.RedPotion, 32, 2);
-        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(700, 400), SpriteType.RedPotion, 32, 2);
+        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(500, 400), new Coordinate(0, 0), SpriteType.RED_POTION_BIG, 32, 2);
+        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(700, 400), new Coordinate(0, 0), SpriteType.BLUE_POTION_BIG, 32, 2);
 
+        // create mock up player actor
+        actorManager.createActorInstance("Player_01", new Coordinate(0, 0), new Coordinate(3, 3), SpriteType.PLAYER, 0, 0, ActorType.Player, 3, 1, 5);
+        
         // start game thread
-        Start();
+        start();
 
         System.out.println("Game started succesfully!");
     }
 
-    public synchronized void Start() {
+    public synchronized void start() {
         thread = new Thread(this);
         thread.start();
         isRunning = true;
     }
 
-    public synchronized void Stop() {
+    public synchronized void stop() {
         try {
             thread.join();
             isRunning = false;
@@ -183,10 +192,10 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() { 
-        GameLoop();
+        gameLoop();
     }
 
-    private void GameLoop() {
+    private void gameLoop() {
 
         long lastTime = System.nanoTime();
         double unprocessedTime = 0;
@@ -301,11 +310,11 @@ public class Game extends Canvas implements Runnable {
         this.gamestate = gamestate;
     }
 
-    public GUIRenderer getGuiRenderer() {
+    public GuiRenderer getGuiRenderer() {
         return guiRenderer;
     }
 
-    public void setGuiRenderer(GUIRenderer guiRenderer) {
+    public void setGuiRenderer(GuiRenderer guiRenderer) {
         this.guiRenderer = guiRenderer;
     }
 
@@ -325,20 +334,28 @@ public class Game extends Canvas implements Runnable {
         this.mousePos = mousePos;
     }
 
-    public List<GuiString> getGuiStrings() {
-        return guiStrings;
-    }
-
-    public void setGuiStrings(List<GuiString> guiStrings) {
-        this.guiStrings = guiStrings;
-    }
-
     public Minimap getMinimap() {
         return minimap;
     }
 
     public void setMinimap(Minimap minimap) {
         this.minimap = minimap;
+    }
+
+    public List<GuiElement> getEquipmentSlots() {
+        return equipmentSlots;
+    }
+
+    public void setEquipmentSlots(List<GuiElement> equipmentSlots) {
+        this.equipmentSlots = equipmentSlots;
+    }
+
+    public List<GuiElement> getInventorySlots() {
+        return inventorySlots;
+    }
+
+    public void setInventorySlots(List<GuiElement> inventorySlots) {
+        this.inventorySlots = inventorySlots;
     }
 
 }

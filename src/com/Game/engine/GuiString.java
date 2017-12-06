@@ -2,6 +2,8 @@ package com.Game.engine;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class GuiString {
 
@@ -9,22 +11,25 @@ public class GuiString {
     private int x;
     private int y;
     private Color color;
-    private GUIRenderer guiRenderer;
-
+    private GuiRenderer guiRenderer;
+    private List<BufferedImage> renderText;
+    
     public GuiString(String txt, int x, int y, Color color) {
+        this.guiRenderer = Game.instance.getGuiRenderer();
+        this.renderText = this.guiRenderer.createText(txt);
         this.text = txt;
         this.x = x;
         this.y = y;
         this.color = color;
-        this.guiRenderer = Game.instance.getGuiRenderer();
-    }
-
-    public void tick() {
-        // some cool animations here
     }
 
     public void render(Graphics g) {
-        this.guiRenderer.renderText(g, this.text, this.x, this.y, Game.SCREEN_MULTIPLIER, this.color);
+        int margin = 1 * Game.SCREEN_MULTIPLIER;
+        int count = 0;
+        for(BufferedImage img : this.renderText) {
+            g.drawImage(img, this.x + img.getWidth() * count + margin * count, this.y, null);
+            count += 1;
+        }
     }
 
     public String getText() {

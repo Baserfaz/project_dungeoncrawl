@@ -1,5 +1,5 @@
 package com.Game.enumerations;
 
 public enum SpriteType {
-    Player, UITile, RedPotion, FlamingSword
+    PLAYER, UITILE, RED_POTION_BIG, RED_POTION_SMALL, BLUE_POTION_BIG, BLUE_POTION_SMALL, EMPTY_POTION_BIG, EMPTY_POTION_SMALL
 }

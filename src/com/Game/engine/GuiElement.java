@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.Game.enumerations.GUIElementType;
+import com.Game.enumerations.GuiElementType;
 
 public class GuiElement {
 
@@ -16,10 +16,10 @@ public class GuiElement {
     private boolean enabled;
     private boolean visible;
     private boolean highlighted;
-    private GUIElementType type;
+    private GuiElementType type;
     private boolean enableColorManipulation;
 
-    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GUIElementType type, Rectangle rect, BufferedImage img) {
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GuiElementType type, Rectangle rect, BufferedImage img) {
         this.rect = rect;
         this.img = img;
         this.name = name;
@@ -30,7 +30,7 @@ public class GuiElement {
         this.enableColorManipulation = enableColorManipulation;
     }
 
-    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GUIElementType type, Rectangle rect, Color color) {
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GuiElementType type, Rectangle rect, Color color) {
         this.rect = rect;
         this.img = null;
         this.name = name;
@@ -45,7 +45,7 @@ public class GuiElement {
     public void onClick() {
         System.out.println("Clicked " + this.name);
 
-        if(this.type == GUIElementType.BUTTON) {
+        if(this.type == GuiElementType.BUTTON) {
 
         }
 
@@ -58,7 +58,7 @@ public class GuiElement {
     }
 
     public void highlight() {
-        if(this.type == GUIElementType.BUTTON) {
+        if(this.type == GuiElementType.BUTTON) {
             setTempImg(this.img);
             BufferedImage img = Util.tintWithColor(this.img, Color.black);
             setImg(img);
@@ -98,11 +98,11 @@ public class GuiElement {
         this.enabled = enabled;
     }
 
-    public GUIElementType getType() {
+    public GuiElementType getType() {
         return type;
     }
 
-    public void setType(GUIElementType type) {
+    public void setType(GuiElementType type) {
         this.type = type;
     }
 

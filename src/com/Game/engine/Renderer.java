@@ -14,7 +14,7 @@ public class Renderer {
 
         // get references
         Handler handler = Game.instance.getHandler();
-        GUIRenderer guirenderer = Game.instance.getGuiRenderer();
+        GuiRenderer guirenderer = Game.instance.getGuiRenderer();
         Camera cam = Game.instance.getCamera();
         Graphics2D g2d = (Graphics2D) g;
 

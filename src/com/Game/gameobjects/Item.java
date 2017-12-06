@@ -14,8 +14,8 @@ public class Item extends GameObject {
     private ItemType itemType;
     private String name;
 
-    public Item(String name, ItemType itemType, Coordinate pos, SpriteType spriteType, int spriteSize, int spriteSizeMult) {
-        super(pos, spriteType, spriteSize, spriteSizeMult);
+    public Item(String name, ItemType itemType, Coordinate worldPos, Coordinate tilePos, SpriteType spriteType, int spriteSize, int spriteSizeMult) {
+        super(worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);
         this.itemType = itemType;
         this.name = name;
         this.dragging = false;
@@ -25,7 +25,7 @@ public class Item extends GameObject {
         if(dragging) {
             Point p = Game.instance.getMousePos();
             int offset = (spriteSize * spriteSizeMult) / 2;
-            SetWorldPosition(p.x - offset, p.y - offset);
+            setWorldPosition(p.x - offset, p.y - offset);
         }
     }
 
@@ -37,16 +37,16 @@ public class Item extends GameObject {
         }
     }
 
-    public Rectangle GetBounds() {
+    public Rectangle getBounds() {
         return new Rectangle(this.worldPosition.x, this.worldPosition.y, this.size, this.size);
     }
 
     public void inspect() {
-        System.out.println("Inspect: " + this.GetInfo());
+        System.out.println("Inspect: " + this.getInfo());
     }
 
-    public String GetInfo() {
-        String s = super.GetInfo();
+    public String getInfo() {
+        String s = super.getInfo();
         s += " name: " + this.name;
         return s;
     }
