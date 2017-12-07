@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 import com.Game.enumerations.GuiElementType;
 import com.Game.enumerations.GuiSpriteType;
@@ -30,14 +31,14 @@ public class GuiElementCreator {
         elements.add(new GuiElement("sidebarBackground", false, true, false, GuiElementType.BACKGROUND, sidebarBackground, new Color(85, 98, 112, 255)));
         
         // cache sprite map
-        Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiRenderer().guiSprites;
+        Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiSprites();
         
         // these are created at run time and not here.
         List<GuiSpriteType> dontCreateAtAll = Arrays.asList(GuiSpriteType.EMPTY_GEM, GuiSpriteType.FULL_HP_GEM, 
                 GuiSpriteType.FULL_MANA_GEM, GuiSpriteType.FULL_ENERGY_GEM, GuiSpriteType.HALF_HP_GEM,
                 GuiSpriteType.HALF_MANA_GEM, GuiSpriteType.HALF_ENERGY_GEM, GuiSpriteType.DISAGREE, GuiSpriteType.AGREE,
                 GuiSpriteType.EVENT_BAR, GuiSpriteType.ENEMY_BAR, GuiSpriteType.EQUIP_SLOT_BIG, GuiSpriteType.EQUIP_SLOT_SMALL,
-                GuiSpriteType.INV_SLOT_LEFT, GuiSpriteType.INV_SLOT_RIGHT);
+                GuiSpriteType.INV_SLOT_1, GuiSpriteType.INV_SLOT_2, GuiSpriteType.INV_SLOT_3, GuiSpriteType.INV_SLOT_4);
         
         // don't render these at start
         List<GuiSpriteType> notWantedToRender = Arrays.asList(GuiSpriteType.LIGHT_CHARACTER, 
@@ -56,12 +57,7 @@ public class GuiElementCreator {
         List<GuiSpriteType> backgroundElements = Arrays.asList(GuiSpriteType.EQUIPMENT, GuiSpriteType.STATS_PRIMARY, 
                 GuiSpriteType.STATS_SECONDARY, GuiSpriteType.SPELLBOOK, GuiSpriteType.INVENTORY);
         
-        // equipment slots
-        List<GuiSpriteType> equipmentSlotElements = Arrays.asList(GuiSpriteType.EQUIP_SLOT_BIG, GuiSpriteType.EQUIP_SLOT_SMALL);
-        
-        // inventory elements
-        List<GuiSpriteType> inventorySlotElements = Arrays.asList(GuiSpriteType.INV_SLOT_LEFT, GuiSpriteType.INV_SLOT_RIGHT);
-        
+
         for(Entry<GuiSpriteType, BufferedImage> obj : sprites.entrySet()) {
 
             if(dontCreateAtAll.contains(obj.getKey())) continue;
@@ -79,14 +75,6 @@ public class GuiElementCreator {
                 type = GuiElementType.BACKGROUND;
             }
             
-            if(inventorySlotElements.contains(obj.getKey())) {
-                type = GuiElementType.INVENTORY_SLOT;
-            }
-            
-            if(equipmentSlotElements.contains(obj.getKey())) {
-                type = GuiElementType.EQUIPMENT_SLOT;
-            }
-            
             if(notWantedToRender.contains(obj.getKey())) {
                 isVisibleAtStart = false;
             }
@@ -100,11 +88,54 @@ public class GuiElementCreator {
         // return list of elements
         return elements;
     }
-
+    
     public static List<GuiElement> createInventorySlots() {
         List<GuiElement> elements = new ArrayList<GuiElement>();
         
-        // TODO
+        // positions
+        int startx = 149 * Game.SCREEN_MULTIPLIER;
+        int starty = 180 * Game.SCREEN_MULTIPLIER;
+        
+        // cache imgs
+        BufferedImage slot_1 = Game.instance.getGuiSprites().get(GuiSpriteType.INV_SLOT_1);
+        BufferedImage slot_2 = Game.instance.getGuiSprites().get(GuiSpriteType.INV_SLOT_2);
+        BufferedImage slot_3 = Game.instance.getGuiSprites().get(GuiSpriteType.INV_SLOT_3);
+        BufferedImage slot_4 = Game.instance.getGuiSprites().get(GuiSpriteType.INV_SLOT_4);
+        
+        for(int i = 0; i < 12; i++) {
+            
+            // decide which image we use
+            BufferedImage img = null;
+            
+            if(i < 5) img = slot_1;
+            else if(i == 5) img = slot_2;
+            else if(i > 5 && i < 11) img = slot_3;
+            else img = slot_4;
+            
+            // calculate the position of each image
+            int x = 0;
+            int y = 0;
+            
+            if(i < 5) {
+                x = startx + i * img.getWidth();
+                y = starty;
+            } else if(i == 5) {
+                x = startx + i * 32 * Game.SCREEN_MULTIPLIER;
+                y = starty;
+            } else if(i > 5 && i < 11) {
+                x = startx + (i - 6) * img.getWidth();
+                y = starty + 32 * Game.SCREEN_MULTIPLIER;
+            } else {
+                x = startx + 5 * 32 * Game.SCREEN_MULTIPLIER;
+                y = starty + 32 * Game.SCREEN_MULTIPLIER;
+            }
+            
+            // create rectangle
+            Rectangle rect = new Rectangle(x, y, img.getWidth(), img.getHeight());
+            
+            // create element
+            elements.add(new GuiElement("inv_slot_" + i, true, true, false, GuiElementType.INVENTORY_SLOT, rect, img));
+        }
         
         return elements;
     }
@@ -123,7 +154,7 @@ public class GuiElementCreator {
         List<GuiElement> elements = new ArrayList<GuiElement>();
         
         // cache sprite map
-        Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiRenderer().guiSprites;
+        Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiSprites();
         
         // get the sprites
         BufferedImage bigSlotImg = sprites.get(GuiSpriteType.EQUIP_SLOT_BIG);
@@ -150,14 +181,14 @@ public class GuiElementCreator {
         Rectangle rectRightWep = new Rectangle(rightWep.x, rightWep.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
         
         // create + add gui elements
-        elements.add(new GuiElement("leftRing01", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing01, smallSlotImg));
-        elements.add(new GuiElement("leftRing02", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing02, smallSlotImg));
-        elements.add(new GuiElement("helmet", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectHelmet, bigSlotImg));
-        elements.add(new GuiElement("rightRing01", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing01, smallSlotImg));
-        elements.add(new GuiElement("rightRing02", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing02, smallSlotImg));
-        elements.add(new GuiElement("leftWeapon", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftWep, bigSlotImg));
-        elements.add(new GuiElement("armor", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectArmor, bigSlotImg));
-        elements.add(new GuiElement("rightWeapon", false, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightWep, bigSlotImg));
+        elements.add(new GuiElement("leftRing01_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing01, smallSlotImg));
+        elements.add(new GuiElement("leftRing02_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing02, smallSlotImg));
+        elements.add(new GuiElement("helmet_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectHelmet, bigSlotImg));
+        elements.add(new GuiElement("rightRing01_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing01, smallSlotImg));
+        elements.add(new GuiElement("rightRing02_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing02, smallSlotImg));
+        elements.add(new GuiElement("leftWeapon_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftWep, bigSlotImg));
+        elements.add(new GuiElement("armor_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectArmor, bigSlotImg));
+        elements.add(new GuiElement("rightWeapon_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightWep, bigSlotImg));
         
         return elements;
     }

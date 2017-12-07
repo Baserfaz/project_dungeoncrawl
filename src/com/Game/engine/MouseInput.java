@@ -10,7 +10,6 @@ import java.util.List;
 import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
 import com.Game.gameobjects.Item;
-import com.Game.utilities.Coordinate;
 import com.Game.utilities.ItemManager;
 
 public class MouseInput implements MouseMotionListener, MouseListener {
@@ -57,10 +56,9 @@ public class MouseInput implements MouseMotionListener, MouseListener {
         Game.instance.getWindow().setCursor(CursorMode.Default);
 
         // refs
-        List<GuiElement> guiElements = Game.instance.getGuiElements();
-
+        List<GuiElement> guiElements = Game.instance.getAllGuiElements();
+        
         // calculate mouse position
-        Coordinate pos = new Coordinate(e.getX(), e.getY());
         Point point = e.getPoint();
 
         // on which mouse button click
@@ -79,20 +77,25 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             if(stackedElements.size() > 0) {
                 GuiElement element = stackedElements.get(stackedElements.size() - 1);
                 if(element == clickedElement) element.onClick();
+                else { 
+                    if(clickedItem != null) element.onDrop(clickedItem);
+                }
             }
 
         } else if(e.getButton() == MouseEvent.BUTTON2) {
-        } else if(e.getButton() == MouseEvent.BUTTON3 ) {
-        }
+        } else if(e.getButton() == MouseEvent.BUTTON3 ) {}
+        
+        // reset stuff
+        clickedItem = null;
+        clickedElement = null;
     }
 
     private void handleMousePressedInGame(MouseEvent e) {
         // refs
-        List<GuiElement> guiElements = Game.instance.getGuiElements();
+        List<GuiElement> guiElements = Game.instance.getAllGuiElements();
         List<Item> items = ItemManager.items;
 
         // calculate mouse position
-        Coordinate pos = new Coordinate(e.getX(), e.getY());
         Point point = e.getPoint();
 
         // on which mouse button click
@@ -131,26 +134,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             }
 
         } else if(e.getButton() == MouseEvent.BUTTON2) {
-        } else if(e.getButton() == MouseEvent.BUTTON3 ) {
-
-            // set inspection cursor
-            Game.instance.getWindow().setCursor(CursorMode.Inspect);
-
-            List<Item> stackedItems = new ArrayList<Item>();
-
-            // which item was clicked
-            for(Item item : items) {
-                if(item.getBounds().contains(point)) {
-                    stackedItems.add(item);
-                }
-            }
-
-            if(stackedItems.size() > 0) {
-                Item item = stackedItems.get(stackedItems.size() - 1);
-                item.inspect();
-            }
-        }
-
+        } else if(e.getButton() == MouseEvent.BUTTON3 ) {}
     }
 
     private void handleMousePressedInMenu(MouseEvent e) {}

@@ -3,8 +3,10 @@ package com.Game.engine;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.function.Consumer;
 
 import com.Game.enumerations.GuiElementType;
+import com.Game.gameobjects.Item;
 
 public class GuiElement {
 
@@ -18,8 +20,9 @@ public class GuiElement {
     private boolean highlighted;
     private GuiElementType type;
     private boolean enableColorManipulation;
-
-    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GuiElementType type, Rectangle rect, BufferedImage img) {
+    
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, 
+            GuiElementType type, Rectangle rect, BufferedImage img) {
         this.rect = rect;
         this.img = img;
         this.name = name;
@@ -30,7 +33,8 @@ public class GuiElement {
         this.enableColorManipulation = enableColorManipulation;
     }
 
-    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, GuiElementType type, Rectangle rect, Color color) {
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation,
+            GuiElementType type, Rectangle rect, Color color) {
         this.rect = rect;
         this.img = null;
         this.name = name;
@@ -46,9 +50,21 @@ public class GuiElement {
         System.out.println("Clicked " + this.name);
 
         if(this.type == GuiElementType.BUTTON) {
-
+         
+            
+            
         }
-
+    }
+    
+    public void onDrop(Item item) {
+        
+        if(this.type == GuiElementType.EQUIPMENT_SLOT || this.type == GuiElementType.INVENTORY_SLOT) {
+            if(item != null) {
+                System.out.println("Dropped item " + item.getName() + " on " + this.name);
+            } else {
+                System.out.println("Dropped nothing on " + this.name);
+            }
+        } 
     }
 
     public void unhighlight() {
@@ -60,7 +76,7 @@ public class GuiElement {
     public void highlight() {
         if(this.type == GuiElementType.BUTTON) {
             setTempImg(this.img);
-            BufferedImage img = Util.tintWithColor(this.img, Color.black);
+            BufferedImage img = RenderUtils.tintWithColor(this.img, Color.black);
             setImg(img);
             setHighlighted(true);
         }

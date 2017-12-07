@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import com.Game.data.Tile;
 import com.Game.enumerations.TileType;
 import com.Game.gameobjects.Actor;
+import com.Game.utilities.Coordinate;
 
 public class Minimap {
 
@@ -70,7 +71,11 @@ public class Minimap {
             int px = player.getTilePosition().x;
             int py = player.getTilePosition().y;
             if(px == tilex && py == tiley) {
-                g.drawImage(imgPlayer, x, y, null);
+                
+                // rotate the image to be inline with the player's rotation
+                RenderUtils.RenderSprite(imgPlayer, new Coordinate(x, y), player.getLookDir(), g);
+                
+                //g.drawImage(imgPlayer, x, y, null);
             }
 
         }

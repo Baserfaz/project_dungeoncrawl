@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.Game.engine.Game;
+import com.Game.engine.RenderUtils;
 import com.Game.enumerations.ItemType;
 import com.Game.enumerations.SpriteType;
 import com.Game.utilities.Coordinate;
@@ -14,7 +15,8 @@ public class Item extends GameObject {
     private ItemType itemType;
     private String name;
 
-    public Item(String name, ItemType itemType, Coordinate worldPos, Coordinate tilePos, SpriteType spriteType, int spriteSize, int spriteSizeMult) {
+    public Item(String name, ItemType itemType, Coordinate worldPos, Coordinate tilePos,
+            SpriteType spriteType, int spriteSize, int spriteSizeMult) {
         super(worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);
         this.itemType = itemType;
         this.name = name;
@@ -30,7 +32,13 @@ public class Item extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.drawImage(this.sprite, this.worldPosition.x, this.worldPosition.y, null);
+        
+        if(this.dragging) {
+            g.drawImage(RenderUtils.tint(this.sprite, true), this.worldPosition.x, this.worldPosition.y, null);
+        } else {
+            g.drawImage(this.sprite, this.worldPosition.x, this.worldPosition.y, null);
+        }
+        
         if(Game.drawItemRects) {
             g.setColor(Game.itemRectColor);
             g.drawRect(this.worldPosition.x, this.worldPosition.y, this.size, this.size);

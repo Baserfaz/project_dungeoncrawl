@@ -175,6 +175,90 @@ public class SpriteCreator {
             pos.x = 7;
             pos.y = 13;
             break;
+        case SWORD_IRON:
+            pos.x = 8;
+            pos.y = 11;
+            break;
+        case SWORD_GOLD:
+            pos.x = 8;
+            pos.y = 12;
+            break;
+        case SWORD_SAPPHIRE:
+            pos.x = 8;
+            pos.y = 13;
+            break;
+        case SWORD_FLAMING:
+            pos.x = 8;
+            pos.y = 14;
+            break;
+        case DAGGER_IRON:
+            pos.x = 9;
+            pos.y = 11;
+            break;
+        case AXE_IRON_ONE_BLADED:
+            pos.x = 10;
+            pos.y = 11;
+            break;
+        case AXE_IRON_TWO_BLADED:
+            pos.x = 10;
+            pos.y = 12;
+            break;
+        case HAMMER_IRON:
+            pos.x = 11;
+            pos.y = 11;
+            break;
+        case SHIELD_WOODEN_TOWER:
+            pos.x = 12;
+            pos.y = 11;
+            break;
+        case SHIELD_WOODEN_ROUND:
+            pos.x = 12;
+            pos.y = 12;
+            break;
+        case SHIELD_IRON_KITE:
+            pos.x = 12;
+            pos.y = 13;
+            break;
+        case SHIELD_IRON_TOWER:
+            pos.x = 12;
+            pos.y = 14;
+            break;
+        case WAND_WOODEN:
+            pos.x = 13;
+            pos.y = 11;
+            break;
+        case WAND_RUBY:
+            pos.x = 13;
+            pos.y = 12;
+            break;
+        case WAND_SAPPHIRE:
+            pos.x = 13;
+            pos.y = 13;
+            break;
+        case STAFF_WOODEN:
+            pos.x = 14;
+            pos.y = 11;
+            break;
+        case KEY_IRON:
+            pos.x = 15;
+            pos.y = 11;
+            break;
+        case KEY_GOLDEN:
+            pos.x = 15;
+            pos.y = 12;
+            break;
+        case RING_IRON:
+            pos.x = 16;
+            pos.y = 11;
+            break;
+        case RING_GOLDEN:
+            pos.x = 16;
+            pos.y = 12;
+            break;
+        case RING_GEM_EMERALD:
+            pos.x = 16;
+            pos.y = 13;
+            break;
         default:
             break;
         }

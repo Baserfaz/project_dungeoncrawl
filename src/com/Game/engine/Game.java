@@ -6,7 +6,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.Game.data.World;
 import com.Game.engine.Camera;
@@ -14,15 +18,13 @@ import com.Game.engine.Renderer;
 import com.Game.engine.Util;
 import com.Game.engine.Window;
 import com.Game.enumerations.ActorType;
-import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
 import com.Game.enumerations.GuiSpriteType;
-import com.Game.enumerations.ItemType;
-import com.Game.enumerations.SpriteType;
 import com.Game.utilities.ActorManager;
 import com.Game.utilities.Coordinate;
 import com.Game.utilities.ItemManager;
 import com.Game.utilities.SpriteCreator;
+import com.Game.utilities.SpriteLoader;
 
 public class Game extends Canvas implements Runnable {
 
@@ -50,6 +52,7 @@ public class Game extends Canvas implements Runnable {
     public static final String FRAMICONPATH        = "resources/images/icon.png";      // path to frame icon.
 
     public static final int SPRITEGRIDSIZE         = 32;
+    public static final int ITEMSPRITESIZEMULT     = 2;
 
     public static final String CUSTOMFONTNAME      = "coders_crux";		               // name of the custom font
     public static final String CUSTOMFONTEXTENSION = ".ttf";			               // file extension name
@@ -91,9 +94,13 @@ public class Game extends Canvas implements Runnable {
     private GuiRenderer guiRenderer;
     private GameState gamestate;
     
+    private List<GuiElement> allGuiElements;
     private List<GuiElement> guiElements;
     private List<GuiElement> equipmentSlots;
     private List<GuiElement> inventorySlots;
+    
+    private Map<Character, BufferedImage> alphabets = new HashMap<Character, BufferedImage>(); 
+    private Map<GuiSpriteType, BufferedImage> guiSprites = new HashMap<GuiSpriteType, BufferedImage>();
     
     private World world;
     private ActorManager actorManager;
@@ -131,11 +138,11 @@ public class Game extends Canvas implements Runnable {
         this.guiRenderer = new GuiRenderer();
 
         // initiate sprite font
-        this.guiRenderer.initiateAlphabets();
+        this.alphabets = SpriteLoader.initiateAlphabets();
 
         // load all gui sprites
-        this.guiRenderer.loadGuiSprites();
-        System.out.println("Loaded " + this.guiRenderer.guiSprites.size() + "/" + GuiSpriteType.values().length + " gui sprites succesfully.");
+        this.guiSprites = SpriteLoader.loadGuiSprites();
+        System.out.println("Loaded " + this.guiSprites.size() + "/" + GuiSpriteType.values().length + " gui sprites succesfully.");
 
         // create gui-elements
         this.guiElements = GuiElementCreator.createGuiElements();
@@ -148,6 +155,11 @@ public class Game extends Canvas implements Runnable {
         // create inventory slots
         this.inventorySlots = GuiElementCreator.createInventorySlots();
         System.out.println("Created " + this.inventorySlots.size() + " inventory slots.");
+        
+        // merge all gui elements into one single list
+        this.allGuiElements = new ArrayList<GuiElement>(this.guiElements);
+        this.allGuiElements.addAll(this.equipmentSlots);
+        this.allGuiElements.addAll(this.inventorySlots);        
         
         // create camera
         this.camera = new Camera();
@@ -165,12 +177,11 @@ public class Game extends Canvas implements Runnable {
         // create minimap
         this.minimap = new Minimap();
 
-        // debug: create item on screen
-        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(500, 400), new Coordinate(0, 0), SpriteType.RED_POTION_BIG, 32, 2);
-        ItemManager.createItem("Health Potion", ItemType.Potion, new Coordinate(700, 400), new Coordinate(0, 0), SpriteType.BLUE_POTION_BIG, 32, 2);
-
+        // debug: create items on screen
+        ItemManager.createAllItems();
+        
         // create mock up player actor
-        actorManager.createActorInstance("Player_01", new Coordinate(0, 0), new Coordinate(3, 3), SpriteType.PLAYER, 0, 0, ActorType.Player, 3, 1, 5);
+        actorManager.createActorInstance("Player_01", new Coordinate(0, 0), new Coordinate(3, 3), null, 0, 0, ActorType.Player, 3, 1, 5);
         
         // start game thread
         start();
@@ -356,6 +367,30 @@ public class Game extends Canvas implements Runnable {
 
     public void setInventorySlots(List<GuiElement> inventorySlots) {
         this.inventorySlots = inventorySlots;
+    }
+
+    public Map<Character, BufferedImage> getAlphabets() {
+        return alphabets;
+    }
+
+    public void setAlphabets(Map<Character, BufferedImage> alphabets) {
+        this.alphabets = alphabets;
+    }
+
+    public Map<GuiSpriteType, BufferedImage> getGuiSprites() {
+        return guiSprites;
+    }
+
+    public void setGuiSprites(Map<GuiSpriteType, BufferedImage> guiSprites) {
+        this.guiSprites = guiSprites;
+    }
+
+    public List<GuiElement> getAllGuiElements() {
+        return allGuiElements;
+    }
+
+    public void setAllGuiElements(List<GuiElement> allGuiElements) {
+        this.allGuiElements = allGuiElements;
     }
 
 }

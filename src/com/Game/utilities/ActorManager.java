@@ -15,7 +15,7 @@ public class ActorManager {
     private List<Actor> actorInstances;
     private Actor playerInstance;
 
-    private GuiString playerNameString;
+    private GuiString playerNameSpriteString;
     
     public ActorManager() {
         actorInstances = new ArrayList<Actor>();
@@ -31,7 +31,9 @@ public class ActorManager {
             actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
             playerInstance = actor;
             Game.instance.getCamera().setFollowTarget(actor);
-            playerNameString = GuiElementCreator.createPlayerName(actorName);
+            
+            // create name using sprite font
+            playerNameSpriteString = GuiElementCreator.createPlayerName(actorName);
         } else if (actorType == ActorType.Enemy) {
             actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
             actorInstances.add(actor);
@@ -64,12 +66,12 @@ public class ActorManager {
         this.playerInstance = playerInstance;
     }
 
-    public GuiString getPlayerNameString() {
-        return playerNameString;
+    public GuiString getPlayerNameSpriteString() {
+        return playerNameSpriteString;
     }
 
-    public void setPlayerNameString(GuiString playerNameString) {
-        this.playerNameString = playerNameString;
+    public void setPlayerNameSpriteString(GuiString playerNameString) {
+        this.playerNameSpriteString = playerNameString;
     }
 
 }

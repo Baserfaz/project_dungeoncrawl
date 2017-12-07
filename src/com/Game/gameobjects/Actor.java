@@ -36,7 +36,7 @@ public class Actor extends GameObject {
         this.experience = new Experience();
         
         this.inv = new Inventory();
-        setLookDir(Direction.East);
+        this.lookDir = Direction.North;
     }
 
     public void tick() {
@@ -57,6 +57,44 @@ public class Actor extends GameObject {
 
     }
 
+    public void turnLeft() {
+        switch(this.lookDir) {
+        case North:
+            this.lookDir = Direction.West;
+            break;
+        case South:
+            this.lookDir = Direction.East;
+            break;
+        case East:
+            this.lookDir = Direction.North;
+            break;
+        case West:
+            this.lookDir = Direction.South;
+            break;
+        default:
+            break;
+        }
+    }
+    
+    public void turnRight() {
+        switch(this.lookDir) {
+        case North:
+            this.lookDir = Direction.East;
+            break;
+        case South:
+            this.lookDir = Direction.West;
+            break;
+        case East:
+            this.lookDir = Direction.South;
+            break;
+        case West:
+            this.lookDir = Direction.North;
+            break;
+        default:
+            break;
+        }
+    }
+    
     public Health getHP() {
         return HP;
     }
