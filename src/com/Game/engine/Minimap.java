@@ -8,6 +8,7 @@ import com.Game.data.Tile;
 import com.Game.enumerations.TileType;
 import com.Game.gameobjects.Actor;
 import com.Game.utilities.Coordinate;
+import com.Game.utilities.RenderUtils;
 
 public class Minimap {
 

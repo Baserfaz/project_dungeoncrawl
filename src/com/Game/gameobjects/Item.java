@@ -5,10 +5,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.Game.engine.Game;
-import com.Game.engine.RenderUtils;
 import com.Game.enumerations.ItemType;
 import com.Game.enumerations.SpriteType;
 import com.Game.utilities.Coordinate;
+import com.Game.utilities.RenderUtils;
 
 public class Item extends GameObject {
 

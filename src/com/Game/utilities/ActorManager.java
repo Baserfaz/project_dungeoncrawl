@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.Game.engine.Game;
-import com.Game.engine.GuiElementCreator;
 import com.Game.engine.GuiString;
 import com.Game.enumerations.ActorType;
 import com.Game.enumerations.SpriteType;
@@ -28,14 +27,14 @@ public class ActorManager {
         Actor actor = null;
 
         if(actorType == ActorType.Player) {
-            actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
+            actor = new Actor(actorName, actorType, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
             playerInstance = actor;
             Game.instance.getCamera().setFollowTarget(actor);
             
             // create name using sprite font
             playerNameSpriteString = GuiElementCreator.createPlayerName(actorName);
         } else if (actorType == ActorType.Enemy) {
-            actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
+            actor = new Actor(actorName, actorType, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
             actorInstances.add(actor);
         }
         return actor;

@@ -12,19 +12,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Game.data.GuiElement;
 import com.Game.data.World;
 import com.Game.engine.Camera;
 import com.Game.engine.Renderer;
-import com.Game.engine.Util;
 import com.Game.engine.Window;
 import com.Game.enumerations.ActorType;
 import com.Game.enumerations.GameState;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.utilities.ActorManager;
 import com.Game.utilities.Coordinate;
+import com.Game.utilities.GuiElementCreator;
 import com.Game.utilities.ItemManager;
 import com.Game.utilities.SpriteCreator;
 import com.Game.utilities.SpriteLoader;
+import com.Game.utilities.Util;
 
 public class Game extends Canvas implements Runnable {
 

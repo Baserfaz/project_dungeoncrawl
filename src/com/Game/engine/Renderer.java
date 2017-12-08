@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
 import com.Game.utilities.Coordinate;
+import com.Game.utilities.Util;
 
 public class Renderer {
 

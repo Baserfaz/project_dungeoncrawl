@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.Game.data.Energy;
+import com.Game.data.GuiElement;
 import com.Game.data.Health;
 import com.Game.data.Mana;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.gameobjects.Actor;
 import com.Game.utilities.Coordinate;
+import com.Game.utilities.RenderUtils;
 import com.Game.utilities.SpriteCreator;
 
 import java.awt.Rectangle;

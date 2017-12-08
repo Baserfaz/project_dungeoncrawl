@@ -1,25 +1,25 @@
-package com.Game.engine;
+package com.Game.data;
 
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.function.Consumer;
 
 import com.Game.enumerations.GuiElementType;
 import com.Game.gameobjects.Item;
+import com.Game.utilities.RenderUtils;
 
 public class GuiElement {
 
-    private Rectangle rect;
-    private BufferedImage img;
-    private BufferedImage tempImg;
-    private String name;
-    private Color color;
-    private boolean enabled;
-    private boolean visible;
-    private boolean highlighted;
-    private GuiElementType type;
-    private boolean enableColorManipulation;
+    protected Rectangle rect;
+    protected BufferedImage img;
+    protected BufferedImage tempImg;
+    protected String name;
+    protected Color color;
+    protected boolean enabled;
+    protected boolean visible;
+    protected boolean highlighted;
+    protected GuiElementType type;
+    protected boolean enableColorManipulation;
     
     public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, 
             GuiElementType type, Rectangle rect, BufferedImage img) {
@@ -48,23 +48,11 @@ public class GuiElement {
     
     public void onClick() {
         System.out.println("Clicked " + this.name);
-
-        if(this.type == GuiElementType.BUTTON) {
-         
-            
-            
-        }
+        if(this.type == GuiElementType.BUTTON) {}
     }
     
     public void onDrop(Item item) {
-        
-        if(this.type == GuiElementType.EQUIPMENT_SLOT || this.type == GuiElementType.INVENTORY_SLOT) {
-            if(item != null) {
-                System.out.println("Dropped item " + item.getName() + " on " + this.name);
-            } else {
-                System.out.println("Dropped nothing on " + this.name);
-            }
-        } 
+        System.out.println("Dropped item " + item.getName() + " on " + this.name);
     }
 
     public void unhighlight() {

@@ -1,9 +1,11 @@
-package com.Game.engine;
+package com.Game.utilities;
 
+import com.Game.engine.Camera;
+import com.Game.engine.Game;
 import com.Game.enumerations.Direction;
 import com.Game.gameobjects.GameObject;
-import com.Game.utilities.Coordinate;
 
+import java.lang.Math;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;

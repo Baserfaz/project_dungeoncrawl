@@ -1,4 +1,4 @@
-package com.Game.engine;
+package com.Game.utilities;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,8 +12,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 
+import java.lang.Math;
+
+import com.Game.engine.Game;
 import com.Game.enumerations.Direction;
-import com.Game.utilities.Coordinate;
 
 public class RenderUtils {
 
@@ -24,7 +26,7 @@ public class RenderUtils {
         return op.filter(sprite, null);
     }
     
- // http://stackoverflow.com/questions/4248104/applying-a-tint-to-an-image-in-java
+    // http://stackoverflow.com/questions/4248104/applying-a-tint-to-an-image-in-java
     public static BufferedImage tint(BufferedImage image, boolean darker) {
 
         // copy the image 

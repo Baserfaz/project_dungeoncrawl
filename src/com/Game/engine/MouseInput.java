@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Game.data.GuiElement;
 import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
 import com.Game.gameobjects.Item;

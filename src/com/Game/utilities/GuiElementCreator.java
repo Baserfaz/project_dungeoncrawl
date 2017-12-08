@@ -1,4 +1,4 @@
-package com.Game.engine;
+package com.Game.utilities;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -8,12 +8,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Consumer;
 
+import com.Game.data.GuiElement;
+import com.Game.data.GuiEquipmentSlot;
+import com.Game.data.GuiInventorySlot;
+import com.Game.engine.Game;
+import com.Game.engine.GuiString;
+import com.Game.enumerations.EquipmentSlot;
 import com.Game.enumerations.GuiElementType;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.gameobjects.Actor;
-import com.Game.utilities.Coordinate;
 
 public class GuiElementCreator {
 
@@ -49,14 +53,12 @@ public class GuiElementCreator {
         List<GuiSpriteType> isClickableElement = Arrays.asList(GuiSpriteType.ACTION_1, GuiSpriteType.ACTION_2, 
                 GuiSpriteType.AGREE, GuiSpriteType.BACKWARD, GuiSpriteType.DARK_CHARACTER, GuiSpriteType.DISAGREE,
                 GuiSpriteType.FORWARD, GuiSpriteType.LIGHT_SPELLBOOK, GuiSpriteType.MAP, GuiSpriteType.MENU, 
-                GuiSpriteType.PRIMARY_STATS_DARK, GuiSpriteType.PRIMARY_STATS_LIGHT, GuiSpriteType.REST,
-                GuiSpriteType.SECONDARY_STATS_DARK, GuiSpriteType.SECONDARY_STATS_LIGHT, GuiSpriteType.STRAFE_LEFT,
-                GuiSpriteType.STRAFE_RIGHT, GuiSpriteType.TURN_LEFT, GuiSpriteType.TURN_RIGHT);
+                GuiSpriteType.PRIMARY_STATS_LIGHT, GuiSpriteType.REST, GuiSpriteType.SECONDARY_STATS_DARK, 
+                GuiSpriteType.STRAFE_LEFT, GuiSpriteType.STRAFE_RIGHT, GuiSpriteType.TURN_LEFT, GuiSpriteType.TURN_RIGHT);
         
         // background element
         List<GuiSpriteType> backgroundElements = Arrays.asList(GuiSpriteType.EQUIPMENT, GuiSpriteType.STATS_PRIMARY, 
                 GuiSpriteType.STATS_SECONDARY, GuiSpriteType.SPELLBOOK, GuiSpriteType.INVENTORY);
-        
 
         for(Entry<GuiSpriteType, BufferedImage> obj : sprites.entrySet()) {
 
@@ -77,6 +79,7 @@ public class GuiElementCreator {
             
             if(notWantedToRender.contains(obj.getKey())) {
                 isVisibleAtStart = false;
+                isClickable = false;
             }
             
             BufferedImage img = obj.getValue();
@@ -134,7 +137,7 @@ public class GuiElementCreator {
             Rectangle rect = new Rectangle(x, y, img.getWidth(), img.getHeight());
             
             // create element
-            elements.add(new GuiElement("inv_slot_" + i, true, true, false, GuiElementType.INVENTORY_SLOT, rect, img));
+            elements.add(new GuiInventorySlot("inv_slot_" + i, true, true, false, GuiElementType.INVENTORY_SLOT, rect, img));
         }
         
         return elements;
@@ -180,16 +183,17 @@ public class GuiElementCreator {
         Rectangle rectArmor = new Rectangle(armor.x, armor.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
         Rectangle rectRightWep = new Rectangle(rightWep.x, rightWep.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
         
-        // create + add gui elements
-        elements.add(new GuiElement("leftRing01_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing01, smallSlotImg));
-        elements.add(new GuiElement("leftRing02_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing02, smallSlotImg));
-        elements.add(new GuiElement("helmet_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectHelmet, bigSlotImg));
-        elements.add(new GuiElement("rightRing01_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing01, smallSlotImg));
-        elements.add(new GuiElement("rightRing02_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing02, smallSlotImg));
-        elements.add(new GuiElement("leftWeapon_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftWep, bigSlotImg));
-        elements.add(new GuiElement("armor_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectArmor, bigSlotImg));
-        elements.add(new GuiElement("rightWeapon_slot", true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightWep, bigSlotImg));
+        // create + add gui-elements
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING01.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing01, smallSlotImg, EquipmentSlot.RING01));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING02.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing02, smallSlotImg, EquipmentSlot.RING02));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.HELMET.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectHelmet, bigSlotImg, EquipmentSlot.HELMET));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING03.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing01, smallSlotImg, EquipmentSlot.RING03));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING04.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing02, smallSlotImg, EquipmentSlot.RING04));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.MAINHANDITEM.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftWep, bigSlotImg, EquipmentSlot.MAINHANDITEM));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.ARMOR.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectArmor, bigSlotImg, EquipmentSlot.ARMOR));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.OFFHANDITEM.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightWep, bigSlotImg, EquipmentSlot.OFFHANDITEM));
         
+        // return all items
         return elements;
     }
     
@@ -249,6 +253,7 @@ public class GuiElementCreator {
             coord.x = 5;
             coord.y = 226;
             break;
+            
         case PRIMARY_STATS_DARK:
             coord.x = 4;
             coord.y = 129;
@@ -257,10 +262,6 @@ public class GuiElementCreator {
             coord.x = 4;
             coord.y = 129;
             break;
-        case REST:
-            coord.x = 93;
-            coord.y = 226;
-            break;
         case SECONDARY_STATS_DARK:
             coord.x = 46;
             coord.y = 129;
@@ -268,6 +269,11 @@ public class GuiElementCreator {
         case SECONDARY_STATS_LIGHT:
             coord.x = 46;
             coord.y = 129;
+            break;
+            
+        case REST:
+            coord.x = 93;
+            coord.y = 226;
             break;
         case SPELLBOOK:
             coord.x = 0;
