@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +13,9 @@ import com.Game.data.Health;
 import com.Game.data.Mana;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.gameobjects.Actor;
+import com.Game.utilities.ActorManager;
 import com.Game.utilities.Coordinate;
 import com.Game.utilities.RenderUtils;
-import com.Game.utilities.SpriteCreator;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -168,10 +167,12 @@ public class GuiRenderer {
             }
         }
         
-        // draw name, level and class
-        Game.instance.getActorManager().getPlayerNameSpriteString().render(g);
+        // cache actor manager instance
+        ActorManager am = Game.instance.getActorManager();
         
-        // TODO
+        // draw name, level and class
+        am.getPlayerNameSpriteString().render(g);
+        am.getPlayerClassSpriteString().render(g);
         
     }
 

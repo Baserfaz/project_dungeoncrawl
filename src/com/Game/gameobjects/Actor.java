@@ -17,32 +17,21 @@ public class Actor extends GameObject {
 
     private Direction lookDir;
     private String name;
-    private ActorType actorType;
     
     private Health HP;
     private Energy energy;
     private Mana MP;
     
-    private Experience experience;
-    private Equipment equipment;
-    
-    public Actor(String name, ActorType actorType, Coordinate worldPos,
-            Coordinate tilePos, SpriteType spriteType, int spriteSize, 
-            int spriteSizeMult, int hp, int mp, int energy) {
+    public Actor(String name, Coordinate worldPos, Coordinate tilePos,
+            SpriteType spriteType, int spriteSize, int spriteSizeMult, int hp, int mp, int energy) {
         super(worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);
         
         this.name = name;
-        this.actorType = actorType;
         this.lookDir = Direction.North;
         
         setHP(new Health(hp));
         setMP(new Mana(mp));
         setEnergy(new Energy(energy));
-        
-        if(actorType == ActorType.Player) {
-            this.experience = new Experience();
-            this.equipment = new Equipment();
-        }
     }
 
     public void tick() {
@@ -139,25 +128,5 @@ public class Actor extends GameObject {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Experience getExperience() {
-        return experience;
-    }
-
-    public ActorType getActorType() {
-        return actorType;
-    }
-
-    public void setActorType(ActorType actorType) {
-        this.actorType = actorType;
-    }
-
-    public Equipment getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
     }
 }

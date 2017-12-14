@@ -149,8 +149,8 @@ public class GuiElementCreator {
         return new GuiString(player.getName(), 15 * Game.SCREEN_MULTIPLIER, 152 * Game.SCREEN_MULTIPLIER, Color.white);
     }
     
-    public static GuiString createPlayerName(String name) {
-        return new GuiString(name, 15 * Game.SCREEN_MULTIPLIER, 152 * Game.SCREEN_MULTIPLIER, Color.white);
+    public static GuiString createGuiString(String name, int x, int y, Color color) {
+        return new GuiString(name, x * Game.SCREEN_MULTIPLIER, y * Game.SCREEN_MULTIPLIER, color);
     }
     
     public static List<GuiElement> createEquipmentSlots() {
