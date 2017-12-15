@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.Game.engine.Game;
 import com.Game.enumerations.GuiElementType;
+import com.Game.enumerations.GuiSpriteType;
+import com.Game.gameobjects.Actor;
 import com.Game.gameobjects.Item;
 import com.Game.utilities.RenderUtils;
 
@@ -18,8 +21,22 @@ public class GuiElement {
     protected boolean enabled;
     protected boolean visible;
     protected boolean highlighted;
-    protected GuiElementType type;
+    protected GuiElementType elementType;
+    protected GuiSpriteType spriteType;
     protected boolean enableColorManipulation;
+    
+    public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, 
+            GuiElementType type, GuiSpriteType spriteType, Rectangle rect, BufferedImage img) {
+        this.rect = rect;
+        this.img = img;
+        this.name = name;
+        this.enabled = enabled;
+        this.elementType = type;
+        this.spriteType = spriteType;
+        this.visible = visible;
+        this.highlighted = false;
+        this.enableColorManipulation = enableColorManipulation;
+    }
     
     public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation, 
             GuiElementType type, Rectangle rect, BufferedImage img) {
@@ -27,19 +44,20 @@ public class GuiElement {
         this.img = img;
         this.name = name;
         this.enabled = enabled;
-        this.type = type;
+        this.elementType = type;
+        this.spriteType = GuiSpriteType.NONE;
         this.visible = visible;
         this.highlighted = false;
         this.enableColorManipulation = enableColorManipulation;
     }
-
+    
     public GuiElement(String name, boolean enabled, boolean visible, boolean enableColorManipulation,
             GuiElementType type, Rectangle rect, Color color) {
         this.rect = rect;
         this.img = null;
         this.name = name;
         this.enabled = enabled;
-        this.type = type;
+        this.elementType = type;
         this.visible = visible;
         this.highlighted = false;
         this.color = color;
@@ -47,8 +65,9 @@ public class GuiElement {
     }
     
     public void onClick() {
-        System.out.println("Clicked " + this.name);
-        if(this.type == GuiElementType.BUTTON) {}
+        if(this.elementType == GuiElementType.BUTTON) {
+            this.doClickFunction();
+        }
     }
     
     public void onDrop(Item item) {
@@ -62,7 +81,7 @@ public class GuiElement {
     }
 
     public void highlight() {
-        if(this.type == GuiElementType.BUTTON) {
+        if(this.elementType == GuiElementType.BUTTON) {
             setTempImg(this.img);
             BufferedImage img = RenderUtils.tintWithColor(this.img, Color.black);
             setImg(img);
@@ -70,6 +89,81 @@ public class GuiElement {
         }
     }
 
+    private void doClickFunction() {
+        
+        // get player reference
+        Actor player = Game.instance.getActorManager().getPlayerInstance();
+        
+        switch(this.spriteType) {
+            
+            // player actions
+            case ACTION_1:
+                break;
+            case ACTION_2:
+                break;
+                
+            // other stuff
+            case AGREE:
+                break;
+            case DISAGREE:
+                break;
+                
+            // movement buttons
+            case BACKWARD:
+                player.moveBackward();
+                break;
+            case FORWARD:
+                player.moveForward();
+                break;
+            case STRAFE_LEFT:
+                player.strafeLeft();
+                break;
+            case STRAFE_RIGHT:
+                player.strafeRight();
+                break;
+            case TURN_LEFT:
+                player.turnLeft();
+                break;
+            case TURN_RIGHT:
+                player.turnRight();
+                break;
+                
+            // top buttons
+            case DARK_CHARACTER:
+                break;
+            case LIGHT_CHARACTER:
+                break;
+            case DARK_SPELLBOOK:
+                break;
+            case LIGHT_SPELLBOOK:
+                break;
+
+            // misc. buttons
+            case MAP:
+                Game.renderMinimap = !Game.renderMinimap;
+                break;
+            case MENU:
+                break;
+            case REST:
+                break;
+                
+            // stats buttons
+            case PRIMARY_STATS_DARK:
+                break;
+            case PRIMARY_STATS_LIGHT:
+                break;
+            case SECONDARY_STATS_DARK:
+                break;
+            case SECONDARY_STATS_LIGHT:
+                break;
+             
+            default:
+                System.out.println("Not matching function for type: " + this.spriteType 
+                        + ". Probably this should not be a button.");
+                break;
+        }
+    }
+    
     public Rectangle getRect() {
         return rect;
     }
@@ -103,11 +197,11 @@ public class GuiElement {
     }
 
     public GuiElementType getType() {
-        return type;
+        return elementType;
     }
 
     public void setType(GuiElementType type) {
-        this.type = type;
+        this.elementType = type;
     }
 
     public boolean isVisible() {

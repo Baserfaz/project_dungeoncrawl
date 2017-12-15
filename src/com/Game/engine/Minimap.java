@@ -17,7 +17,7 @@ public class Minimap {
     private BufferedImage imgWall;
     private BufferedImage imgPlayer;
     
-    private int marginBetweenTiles = 1;
+    private int marginBetweenTiles = 0;
 
     public Minimap() {
         // create image that represents the tile
@@ -46,8 +46,8 @@ public class Minimap {
             int tiley = tile.getPosition().y;
 
             // calculate position
-            int x = camBounds.x + 25 + (tilex * 32) + (tilex * marginBetweenTiles);
-            int y = camBounds.y + 25 + (tiley * 32) + (tiley * marginBetweenTiles);
+            int x = camBounds.x + 25 + (tilex * 32) + (tilex * this.marginBetweenTiles);
+            int y = camBounds.y + 25 + (tiley * 32) + (tiley * this.marginBetweenTiles);
 
             // cache vars
             BufferedImage img;
@@ -68,15 +68,12 @@ public class Minimap {
             // draw tile
             g.drawImage(img, x, y, null);
 
-            // check if the player is on this tile
+            // draw player position on the map
             int px = player.getTilePosition().x;
             int py = player.getTilePosition().y;
             if(px == tilex && py == tiley) {
-                
                 // rotate the image to be inline with the player's rotation
                 RenderUtils.RenderSprite(imgPlayer, new Coordinate(x, y), player.getLookDir(), g);
-                
-                //g.drawImage(imgPlayer, x, y, null);
             }
 
         }

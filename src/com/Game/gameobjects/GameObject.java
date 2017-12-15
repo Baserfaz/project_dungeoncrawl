@@ -50,8 +50,12 @@ public abstract class GameObject {
 
     public void setSprite(BufferedImage i) { this.sprite = i; }
     public BufferedImage getSprite() { return this.sprite; }
+    
     public void setWorldPosition(int x, int y) { this.worldPosition = new Coordinate(x, y); }
     public void setWorldPosition(Coordinate pos) { this.worldPosition = pos; }
+    
+    public void setTilePosition(int x, int y) { this.tilePosition = new Coordinate(x, y); }
+    
     public Coordinate getWorldPosition() { return this.worldPosition; }
     public Coordinate getTilePosition() { return this.tilePosition; }
     public boolean isDragging() { return dragging; }

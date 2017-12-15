@@ -1,6 +1,5 @@
 package com.Game.utilities;
 
-
 public class Coordinate {
 
     public int x;
@@ -11,5 +10,10 @@ public class Coordinate {
         this.y = y;
     }
 
+    public boolean equals(Coordinate c) {
+        if(this.x == c.x && this.y == c.y) return true;
+        else return false;
+    }
+    
     public String toString() { return x + ", " + y; }
 }

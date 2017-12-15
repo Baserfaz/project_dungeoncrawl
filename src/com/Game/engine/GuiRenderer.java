@@ -13,8 +13,8 @@ import com.Game.data.Health;
 import com.Game.data.Mana;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.gameobjects.Actor;
-import com.Game.utilities.ActorManager;
 import com.Game.utilities.Coordinate;
+import com.Game.utilities.GuiStringManager;
 import com.Game.utilities.RenderUtils;
 
 import java.awt.Rectangle;
@@ -40,9 +40,11 @@ public class GuiRenderer {
                     }
                 } else {
                     if(element.getImg() != null) {
-                        RenderUtils.FillRectWithImage(element.getRect(), g2d, RenderUtils.tintWithColor(element.getImg(), Color.black));
+                        RenderUtils.FillRectWithImage(element.getRect(), g2d,
+                                RenderUtils.tintWithColor(element.getImg(), Color.black));
                     } else {
-                        RenderUtils.renderRect(element.getRect(), true, false, null, element.getColor().darker(), g2d);  
+                        RenderUtils.renderRect(element.getRect(), true, false,
+                                null, element.getColor().darker(), g2d);  
                     }
                 }
             }
@@ -59,13 +61,14 @@ public class GuiRenderer {
         renderStats(g);
         renderEquipmentSlots(g);
         renderInventorySlots(g);
+    }   
 
-        // render minimap
+    public void renderMinimap(Graphics g) {
         if(Game.renderMinimap) {
             Game.instance.getMinimap().render(g);
         }
-    }   
-
+    }
+    
     private void renderInventorySlots(Graphics g) {
         for(GuiElement element : Game.instance.getInventorySlots()) {
             RenderUtils.FillRectWithImage(element.getRect(), g, element.getImg());
@@ -111,7 +114,7 @@ public class GuiRenderer {
         int currentEnergy = energy.getCurrentEnergy();
         
         // hardcoded start positions for the gems
-        int posx = 52 * Game.SCREEN_MULTIPLIER;
+        int posx = 57 * Game.SCREEN_MULTIPLIER;
         int hpGemPosy = 177 * Game.SCREEN_MULTIPLIER;
         int energyGemPosy = 187 * Game.SCREEN_MULTIPLIER;
         int manaGemPosy = 197 * Game.SCREEN_MULTIPLIER;
@@ -168,11 +171,12 @@ public class GuiRenderer {
         }
         
         // cache actor manager instance
-        ActorManager am = Game.instance.getActorManager();
+        GuiStringManager mngr = Game.instance.getGuiStringManager();
         
         // draw name, level and class
-        am.getPlayerNameSpriteString().render(g);
-        am.getPlayerClassSpriteString().render(g);
+        mngr.getPlayerName().render(g);
+        mngr.getPlayerClass().render(g);
+        mngr.getPlayerLevel().render(g);
         
     }
 

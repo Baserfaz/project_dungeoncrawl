@@ -63,6 +63,9 @@ public class Renderer {
         // render game objects
         handler.render(g);
 
+        // render minimap on top of items and other GUI
+        guirenderer.renderMinimap(g);
+        
     }
 
     public static void fillScreen(Graphics g, Color color) {

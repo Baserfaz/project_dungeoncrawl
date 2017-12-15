@@ -4,11 +4,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.Game.data.Energy;
-import com.Game.data.Equipment;
-import com.Game.data.Experience;
 import com.Game.data.Health;
 import com.Game.data.Mana;
-import com.Game.enumerations.ActorType;
+import com.Game.engine.Game;
 import com.Game.enumerations.Direction;
 import com.Game.enumerations.SpriteType;
 import com.Game.utilities.Coordinate;
@@ -29,16 +27,12 @@ public class Actor extends GameObject {
         this.name = name;
         this.lookDir = Direction.North;
         
-        setHP(new Health(hp));
-        setMP(new Mana(mp));
-        setEnergy(new Energy(energy));
+        this.HP = new Health(hp);
+        this.MP = new Mana(mp);
+        this.energy = new Energy(energy);
     }
 
-    public void tick() {
-        if(HP.isDead() == false) {
-            this.move();
-        }
-    }
+    public void tick() {}
 
     public void render(Graphics g) {
         g.drawImage(sprite, worldPosition.x, worldPosition.y, null);
@@ -48,8 +42,57 @@ public class Actor extends GameObject {
         return new Rectangle(worldPosition.x, worldPosition.y, this.spriteSize, this.spriteSize);
     }
 
-    public void move() {
-
+    public void moveForward() {
+        
+        Coordinate pos = this.getTilePosition();
+        int x = pos.x;
+        int y = pos.y;
+        
+        switch(this.lookDir) {
+            case East:
+                x += 1;
+                break;
+            case North:
+                y -= 1;
+                break;
+            case South:
+                y += 1;
+                break;
+            case West:
+                x -= 1;
+                break;
+            default:
+                System.out.println("Not supported direction: " + this.lookDir);
+                break;
+        }
+        
+        if(Game.instance.getWorld().isTileWalkable(x, y)) this.setTilePosition(x, y);
+    }
+    
+    public void moveBackward() {
+        Coordinate pos = this.getTilePosition();
+        int x = pos.x;
+        int y = pos.y;
+        
+        switch(this.lookDir) {
+            case East:
+                x -= 1;
+                break;
+            case North:
+                y += 1;
+                break;
+            case South:
+                y -= 1;
+                break;
+            case West:
+                x += 1;
+                break;
+            default:
+                System.out.println("Not supported direction: " + this.lookDir);
+                break;
+        }
+        
+        if(Game.instance.getWorld().isTileWalkable(x, y)) this.setTilePosition(x, y);
     }
 
     public void turnLeft() {
@@ -90,12 +133,60 @@ public class Actor extends GameObject {
         }
     }
     
+    public void strafeLeft() {
+        Coordinate pos = this.getTilePosition();
+        int x = pos.x;
+        int y = pos.y;
+        
+        switch(this.lookDir) {
+            case East:
+                y -= 1;
+                break;
+            case North:
+                x -= 1;
+                break;
+            case South:
+                x += 1;
+                break;
+            case West:
+                y += 1;
+                break;
+            default:
+                System.out.println("Not supported direction: " + this.lookDir);
+                break;
+        }
+        
+        if(Game.instance.getWorld().isTileWalkable(x, y)) this.setTilePosition(x, y);
+    }
+    
+    public void strafeRight() {
+        Coordinate pos = this.getTilePosition();
+        int x = pos.x;
+        int y = pos.y;
+        
+        switch(this.lookDir) {
+            case East:
+                y += 1;
+                break;
+            case North:
+                x += 1;
+                break;
+            case South:
+                x -= 1;
+                break;
+            case West:
+                y -= 1;
+                break;
+            default:
+                System.out.println("Not supported direction: " + this.lookDir);
+                break;
+        }
+        
+        if(Game.instance.getWorld().isTileWalkable(x, y)) this.setTilePosition(x, y);
+    }
+    
     public Health getHP() {
         return HP;
-    }
-
-    public void setHP(Health hP) {
-        HP = hP;
     }
 
     public Direction getLookDir() {
@@ -110,23 +201,11 @@ public class Actor extends GameObject {
         return energy;
     }
 
-    public void setEnergy(Energy energy) {
-        this.energy = energy;
-    }
-
     public Mana getMP() {
         return MP;
     }
 
-    public void setMP(Mana mP) {
-        MP = mP;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

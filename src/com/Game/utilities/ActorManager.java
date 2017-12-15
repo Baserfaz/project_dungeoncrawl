@@ -16,9 +16,6 @@ public class ActorManager {
 
     private List<Actor> actorInstances;
     private Actor playerInstance;
-
-    private GuiString playerNameSpriteString;
-    private GuiString playerClassSpriteString;
     
     public ActorManager() {
         actorInstances = new ArrayList<Actor>();
@@ -29,18 +26,30 @@ public class ActorManager {
             int spriteSizeMult, int health, int mana, int energy) {
 
         Actor actor = null;
-
+        
         if(actorType == ActorType.Player) {
-            Player player = new Player(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy, PlayerClass.ADVENTURER);
+            
+            // create player object
+            Player player = new Player(actorName, worldPos, tilePos, spriteType, 
+                    spriteSize, spriteSizeMult, health, mana, energy, PlayerClass.ADVENTURER);
+            
+            // set variables
             actor = player;
             playerInstance = actor;
+            
+            // set camera
             Game.instance.getCamera().setFollowTarget(actor);
             
-            // create name using sprite font
-            playerNameSpriteString = GuiElementCreator.createGuiString(actorName, 15, 152, Color.white);
+            // get reference
+            GuiStringManager mngr = Game.instance.getGuiStringManager();
             
-            // create class using sprite font
-            playerClassSpriteString = GuiElementCreator.createGuiString(player.getPlayerClass().toString(), 57, 162, Color.white);
+            // create sprite fonts
+            mngr.setPlayerName(GuiElementCreator.createGuiString(actorName, 15, 152, Color.white));
+            mngr.setPlayerClass(GuiElementCreator.createGuiString(
+                    player.getPlayerClass().toString(), 57, 162, Color.white));
+            mngr.setPlayerLevel(GuiElementCreator.createGuiString(
+                    "LVL." + player.getExperience().getCurrentLevel(), 15, 162, Color.white));
+            
             
         } else if (actorType == ActorType.Enemy) {
             actor = new Actor(actorName, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult, health, mana, energy);
@@ -73,21 +82,4 @@ public class ActorManager {
     public void setPlayerInstance(Actor playerInstance) {
         this.playerInstance = playerInstance;
     }
-
-    public GuiString getPlayerNameSpriteString() {
-        return playerNameSpriteString;
-    }
-
-    public void setPlayerNameSpriteString(GuiString playerNameString) {
-        this.playerNameSpriteString = playerNameString;
-    }
-
-    public GuiString getPlayerClassSpriteString() {
-        return playerClassSpriteString;
-    }
-
-    public void setPlayerClassSpriteString(GuiString playerClassSpriteString) {
-        this.playerClassSpriteString = playerClassSpriteString;
-    }
-
 }

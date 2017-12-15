@@ -36,19 +36,13 @@ public class KeyInput extends KeyAdapter {
 
         // debugging keys
         if(key == KeyEvent.VK_F1) {
-            if(Game.drawGUIRects) Game.drawGUIRects = false;
-            else Game.drawGUIRects = true;
+            Game.drawGUIRects = !Game.drawGUIRects;
         } else if(key == KeyEvent.VK_F2) {
-            if(Game.drawCameraRect) Game.drawCameraRect = false;
-            else Game.drawCameraRect = true;
+            Game.drawCameraRect = !Game.drawCameraRect;
         } else if(key == KeyEvent.VK_F3) {
-            if(Game.drawItemRects) Game.drawItemRects = false;
-            else Game.drawItemRects = true;
+            Game.drawItemRects = !Game.drawItemRects;
         } else if(key == KeyEvent.VK_ESCAPE) {
             System.exit(0);
-        } else if(key == KeyEvent.VK_F4 ) {
-            if(Game.renderMinimap) Game.renderMinimap = false;
-            else Game.renderMinimap = true;
         }
 
     }

@@ -23,6 +23,7 @@ import com.Game.enumerations.GuiSpriteType;
 import com.Game.utilities.ActorManager;
 import com.Game.utilities.Coordinate;
 import com.Game.utilities.GuiElementCreator;
+import com.Game.utilities.GuiStringManager;
 import com.Game.utilities.ItemManager;
 import com.Game.utilities.SpriteCreator;
 import com.Game.utilities.SpriteLoader;
@@ -106,6 +107,7 @@ public class Game extends Canvas implements Runnable {
     
     private World world;
     private ActorManager actorManager;
+    private GuiStringManager guiStringManager;
     private Minimap minimap;
     private Point mousePos;
 
@@ -117,13 +119,9 @@ public class Game extends Canvas implements Runnable {
         // create object handler
         this.handler = new Handler();
 
-        // create key listener for inputs.
+        // create input listeners
         this.addKeyListener(new KeyInput());
-
-        // create mouse input object
         MouseInput mouseInput = new MouseInput();
-
-        // create mouse listener
         this.addMouseMotionListener(mouseInput);
         this.addMouseListener(mouseInput);
 
@@ -133,10 +131,9 @@ public class Game extends Canvas implements Runnable {
         // create window 
         this.window = new Window(WIDTH * SCREEN_MULTIPLIER, HEIGHT * SCREEN_MULTIPLIER, TITLE, this);
 
-        // create sprite creator
+        // create sprite managers and creators
         this.spriteCreator = new SpriteCreator(SPRITESHEETNAME);
-
-        // create guiRenderer
+        this.guiStringManager = new GuiStringManager();
         this.guiRenderer = new GuiRenderer();
 
         // initiate sprite font
@@ -166,6 +163,8 @@ public class Game extends Canvas implements Runnable {
         // create camera
         this.camera = new Camera();
 
+
+        
         // create actor manager
         setActorManager(new ActorManager());
 
@@ -393,6 +392,10 @@ public class Game extends Canvas implements Runnable {
 
     public void setAllGuiElements(List<GuiElement> allGuiElements) {
         this.allGuiElements = allGuiElements;
+    }
+
+    public GuiStringManager getGuiStringManager() {
+        return guiStringManager;
     }
 
 }

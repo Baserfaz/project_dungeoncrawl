@@ -12,8 +12,8 @@ public class GuiEquipmentSlot extends GuiElement {
     private EquipmentSlot slot;
     
     public GuiEquipmentSlot(String name, boolean enabled, boolean visible, boolean enableColorManipulation,
-            GuiElementType type, Rectangle rect, BufferedImage img, EquipmentSlot slot) {
-        super(name, enabled, visible, enableColorManipulation, type, rect, img);
+            Rectangle rect, BufferedImage img, EquipmentSlot slot) {
+        super(name, enabled, visible, enableColorManipulation, GuiElementType.EQUIPMENT_SLOT, rect, img);
         
         // set the slot
         this.slot = slot;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.Game.enumerations.TileType;
+import com.Game.utilities.Coordinate;
 
 public class World {
 
@@ -36,7 +37,24 @@ public class World {
     private boolean isOuterTile(int x, int y) {
         return y == 0 || y == this.height - 1 || x == 0 || x == this.width - 1;
     }
-
+    
+    public Tile getTileAtPos(int x, int y) { return this.getTileAtPos(new Coordinate(x, y)); }
+    public Tile getTileAtPos(Coordinate c) {
+        for(Tile t : this.tiles) {
+            Coordinate pos = t.getPosition();
+            if(pos.equals(c)) return t;
+        }
+        return null;
+    }
+    
+    
+    public boolean isTileWalkable(int x, int y) { return this.isTileWalkable(new Coordinate(x, y)); }
+    public boolean isTileWalkable(Coordinate pos) {
+        Tile tile = this.getTileAtPos(pos);
+        if(tile != null) return tile.getTileType() != TileType.Wall;
+        return false;
+    }
+    
     public int getHeight() {
         return height;
     }

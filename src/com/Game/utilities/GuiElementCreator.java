@@ -27,12 +27,16 @@ public class GuiElementCreator {
         List<GuiElement> elements = new ArrayList<GuiElement>();
         
         // bottom background
-        Rectangle bottomBackground = new Rectangle(0, 5 * 32 * Game.SCREEN_MULTIPLIER, 14 * 32 * Game.SCREEN_MULTIPLIER, 3 * 32 * Game.SCREEN_MULTIPLIER);
-        elements.add(new GuiElement("bottomBackground", false, true, false, GuiElementType.BACKGROUND, bottomBackground, new Color(75, 86, 99, 255)));
+        Rectangle bottomBackground = new Rectangle(0, 5 * 32 * Game.SCREEN_MULTIPLIER,
+                14 * 32 * Game.SCREEN_MULTIPLIER, 3 * 32 * Game.SCREEN_MULTIPLIER);
+        elements.add(new GuiElement("bottomBackground", false, true, false,
+                GuiElementType.BACKGROUND, bottomBackground, new Color(75, 86, 99, 255)));
         
         // sidebar background
-        Rectangle sidebarBackground = new Rectangle(0, 0, 141 * Game.SCREEN_MULTIPLIER, 8 * 32 * Game.SCREEN_MULTIPLIER);
-        elements.add(new GuiElement("sidebarBackground", false, true, false, GuiElementType.BACKGROUND, sidebarBackground, new Color(85, 98, 112, 255)));
+        Rectangle sidebarBackground = new Rectangle(0, 0, 141 * Game.SCREEN_MULTIPLIER,
+                8 * 32 * Game.SCREEN_MULTIPLIER);
+        elements.add(new GuiElement("sidebarBackground", false, true, false,
+                GuiElementType.BACKGROUND, sidebarBackground, new Color(85, 98, 112, 255)));
         
         // cache sprite map
         Map<GuiSpriteType, BufferedImage> sprites = Game.instance.getGuiSprites();
@@ -85,7 +89,8 @@ public class GuiElementCreator {
             BufferedImage img = obj.getValue();
             Coordinate pos = getPosition(obj.getKey());
             Rectangle guiElementRect = new Rectangle(pos.x, pos.y, img.getWidth(), img.getHeight());
-            elements.add(new GuiElement(obj.getKey().toString(), isClickable, isVisibleAtStart, isClickable, type, guiElementRect, img));
+            elements.add(new GuiElement(obj.getKey().toString(), isClickable, isVisibleAtStart,
+                    isClickable, type, obj.getKey(), guiElementRect, img));
         }
         
         // return list of elements
@@ -184,14 +189,14 @@ public class GuiElementCreator {
         Rectangle rectRightWep = new Rectangle(rightWep.x, rightWep.y, bigSlotImg.getWidth(), bigSlotImg.getHeight());
         
         // create + add gui-elements
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING01.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing01, smallSlotImg, EquipmentSlot.RING01));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING02.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftRing02, smallSlotImg, EquipmentSlot.RING02));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.HELMET.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectHelmet, bigSlotImg, EquipmentSlot.HELMET));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING03.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing01, smallSlotImg, EquipmentSlot.RING03));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING04.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightRing02, smallSlotImg, EquipmentSlot.RING04));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.MAINHANDITEM.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectLeftWep, bigSlotImg, EquipmentSlot.MAINHANDITEM));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.ARMOR.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectArmor, bigSlotImg, EquipmentSlot.ARMOR));
-        elements.add(new GuiEquipmentSlot(EquipmentSlot.OFFHANDITEM.toString(), true, true, false, GuiElementType.EQUIPMENT_SLOT, rectRightWep, bigSlotImg, EquipmentSlot.OFFHANDITEM));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING01.toString(), true, true, false, rectLeftRing01, smallSlotImg, EquipmentSlot.RING01));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING02.toString(), true, true, false, rectLeftRing02, smallSlotImg, EquipmentSlot.RING02));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.HELMET.toString(), true, true, false, rectHelmet, bigSlotImg, EquipmentSlot.HELMET));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING03.toString(), true, true, false, rectRightRing01, smallSlotImg, EquipmentSlot.RING03));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.RING04.toString(), true, true, false, rectRightRing02, smallSlotImg, EquipmentSlot.RING04));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.MAINHANDITEM.toString(), true, true, false, rectLeftWep, bigSlotImg, EquipmentSlot.MAINHANDITEM));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.ARMOR.toString(), true, true, false, rectArmor, bigSlotImg, EquipmentSlot.ARMOR));
+        elements.add(new GuiEquipmentSlot(EquipmentSlot.OFFHANDITEM.toString(), true, true, false, rectRightWep, bigSlotImg, EquipmentSlot.OFFHANDITEM));
         
         // return all items
         return elements;
