@@ -54,11 +54,15 @@ public class GuiElementCreator {
                 GuiSpriteType.STATS_SECONDARY, GuiSpriteType.SPELLBOOK);
         
         // isClickable list
-        List<GuiSpriteType> isClickableElement = Arrays.asList(GuiSpriteType.ACTION_1, GuiSpriteType.ACTION_2, 
+        List<GuiSpriteType> isClickableElementAtStart = Arrays.asList(GuiSpriteType.ACTION_1, GuiSpriteType.ACTION_2, 
                 GuiSpriteType.AGREE, GuiSpriteType.BACKWARD, GuiSpriteType.DARK_CHARACTER, GuiSpriteType.DISAGREE,
                 GuiSpriteType.FORWARD, GuiSpriteType.LIGHT_SPELLBOOK, GuiSpriteType.MAP, GuiSpriteType.MENU, 
                 GuiSpriteType.PRIMARY_STATS_LIGHT, GuiSpriteType.REST, GuiSpriteType.SECONDARY_STATS_DARK, 
                 GuiSpriteType.STRAFE_LEFT, GuiSpriteType.STRAFE_RIGHT, GuiSpriteType.TURN_LEFT, GuiSpriteType.TURN_RIGHT);
+        
+        // should be created as buttons, but not enabled at start
+        List<GuiSpriteType> isButtonButNotClickableAtStart = Arrays.asList(GuiSpriteType.LIGHT_CHARACTER, 
+                GuiSpriteType.DARK_SPELLBOOK, GuiSpriteType.SECONDARY_STATS_LIGHT, GuiSpriteType.PRIMARY_STATS_LIGHT); 
         
         // background element
         List<GuiSpriteType> backgroundElements = Arrays.asList(GuiSpriteType.EQUIPMENT, GuiSpriteType.STATS_PRIMARY, 
@@ -72,8 +76,12 @@ public class GuiElementCreator {
             boolean isVisibleAtStart = true;
             GuiElementType type = GuiElementType.OTHER;
             
-            if(isClickableElement.contains(obj.getKey())) {
+            if(isClickableElementAtStart.contains(obj.getKey())) {
                 isClickable = true;
+                type = GuiElementType.BUTTON;
+            }
+            
+            if(isButtonButNotClickableAtStart.contains(obj.getKey())) {
                 type = GuiElementType.BUTTON;
             }
             

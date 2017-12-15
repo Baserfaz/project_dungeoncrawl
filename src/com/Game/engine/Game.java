@@ -68,6 +68,8 @@ public class Game extends Canvas implements Runnable {
     public static final int WORLD_HEIGHT           = 10;
 
     public static boolean renderMinimap            = false;
+    public static boolean renderEquipmentSlots     = true;
+    public static boolean renderPrimaryStats       = true;
     
     // ------------------------------
     // DEBUG

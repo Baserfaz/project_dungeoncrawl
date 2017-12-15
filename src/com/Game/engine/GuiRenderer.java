@@ -82,19 +82,27 @@ public class GuiRenderer {
     }
     
     private void renderEquipmentSlots(Graphics g) {
-        for(GuiElement element : Game.instance.getEquipmentSlots()) {
-            RenderUtils.FillRectWithImage(element.getRect(), g, element.getImg());
-            
-            if(Game.drawGUIRects) {
-                Rectangle r = element.getRect();
-                g.setColor(Game.GUIDebugRectColor);
-                g.drawRect(r.x, r.y, r.width, r.height);
+        if(Game.renderEquipmentSlots) {
+            for(GuiElement element : Game.instance.getEquipmentSlots()) {
+                RenderUtils.FillRectWithImage(element.getRect(), g, element.getImg());
+                
+                if(Game.drawGUIRects) {
+                    Rectangle r = element.getRect();
+                    g.setColor(Game.GUIDebugRectColor);
+                    g.drawRect(r.x, r.y, r.width, r.height);
+                }
             }
         }
     }
     
     private void renderStats(Graphics g) {
-        
+        if(Game.renderPrimaryStats) this.renderPrimaryStats(g);
+        else this.renderSecondaryStats(g);
+    }
+
+    private void renderSecondaryStats(Graphics g) {}
+    
+    private void renderPrimaryStats(Graphics g) {
         // cache player instance
         Actor player = Game.instance.getActorManager().getPlayerInstance();
         if(player == null) return;
@@ -177,9 +185,8 @@ public class GuiRenderer {
         mngr.getPlayerName().render(g);
         mngr.getPlayerClass().render(g);
         mngr.getPlayerLevel().render(g);
-        
     }
-
+    
     public List<BufferedImage> createText(String txt) {
         
         // cache alphabets

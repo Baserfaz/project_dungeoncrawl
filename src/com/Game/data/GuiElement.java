@@ -65,6 +65,9 @@ public class GuiElement {
     }
     
     public void onClick() {
+        
+        System.out.println("Clicked: " + this.name);
+        
         if(this.elementType == GuiElementType.BUTTON) {
             this.doClickFunction();
         }
@@ -129,13 +132,81 @@ public class GuiElement {
                 break;
                 
             // top buttons
-            case DARK_CHARACTER:
-                break;
+            // light tinted buttons are clickable
             case LIGHT_CHARACTER:
-                break;
-            case DARK_SPELLBOOK:
+                
+                // 1. hide spell book
+                // 2. show equipment panel 
+                // -----------------------------
+                // 3. show light spellbook button
+                // 4. hide dark spellbook button
+                // 5. show dark character button
+                // 6. hide light character button
+                // -----------------------------
+                // also we have to enable the rendering of 
+                // equipment slots.
+                
+                // this is now light character
+                this.visible = false;
+                this.enabled = false;
+                
+                for(GuiElement e : Game.instance.getAllGuiElements()) {
+                    GuiSpriteType type = e.getSpriteType();
+                    if(type == GuiSpriteType.SPELLBOOK) {
+                        e.visible = false;
+                    } else if(type == GuiSpriteType.EQUIPMENT) {
+                        e.visible = true;
+                    } else if(type == GuiSpriteType.DARK_SPELLBOOK) {
+                        e.visible = false;
+                        e.enabled = false;
+                    } else if(type == GuiSpriteType.DARK_CHARACTER) {
+                        e.visible = true;
+                        e.enabled = true;
+                    } else if(type == GuiSpriteType.LIGHT_SPELLBOOK) {
+                        e.visible = true;
+                        e.enabled = true;
+                    }
+                }
+                
+                Game.renderEquipmentSlots = true;
+                
                 break;
             case LIGHT_SPELLBOOK:
+                
+                // 1. hide equipment panel
+                // 2. show spellbook 
+                // -----------------------------
+                // 3. hide light spellbook button
+                // 4. show dark spellbook button
+                // 5. hide dark character button
+                // 6. show light character button
+                // -----------------------------
+                // also we have to disable the rendering of 
+                // equipment slots.
+                
+                // this is the light spell book
+                this.visible = false;
+                this.enabled = false;
+                
+                for(GuiElement e : Game.instance.getAllGuiElements()) {
+                    GuiSpriteType type = e.getSpriteType();
+                    if(type == GuiSpriteType.SPELLBOOK) {
+                        e.visible = true;
+                    } else if(type == GuiSpriteType.EQUIPMENT) {
+                        e.visible = false;
+                    } else if(type == GuiSpriteType.DARK_SPELLBOOK) {
+                        e.visible = true;
+                        e.enabled = true;
+                    } else if(type == GuiSpriteType.DARK_CHARACTER) {
+                        e.visible = false;
+                        e.enabled = false;
+                    } else if(type == GuiSpriteType.LIGHT_CHARACTER) {
+                        e.visible = true;
+                        e.enabled = true;
+                    }
+                }
+                
+                Game.renderEquipmentSlots = false;
                 break;
 
             // misc. buttons
@@ -148,18 +219,37 @@ public class GuiElement {
                 break;
                 
             // stats buttons
+            // dark tinted buttons are clickable
             case PRIMARY_STATS_DARK:
-                break;
-            case PRIMARY_STATS_LIGHT:
+                
+                // 1. hide primary stats panel
+                // 2. show secondary stats panel
+                // ---------------------------------
+                // 3. hide hp/mana/energy
+                // 4. hide name, class, level
+                // ---------------------------------
+                // 5. hide dark primary stats button
+                // 6. show light primary stats button
+                // 7. hide light secondary stats button
+                // 8. show dark secondary stats button
+                
+                this.visible = false;
+                this.enabled = false;
+                
+                for(GuiElement e : Game.instance.getAllGuiElements()) {
+                    GuiSpriteType type = e.getSpriteType();
+                    if(type == GuiSpriteType.SPELLBOOK) {
+                        e.visible = false;
+                    }
+                }
+                
                 break;
             case SECONDARY_STATS_DARK:
                 break;
-            case SECONDARY_STATS_LIGHT:
-                break;
-             
+                
             default:
                 System.out.println("Not matching function for type: " + this.spriteType 
-                        + ". Probably this should not be a button.");
+                        + ". This shouldn't be a button or enabled.");
                 break;
         }
     }
@@ -242,5 +332,9 @@ public class GuiElement {
 
     public void setEnableColorManipulation(boolean enableColorManipulation) {
         this.enableColorManipulation = enableColorManipulation;
+    }
+    
+    public GuiSpriteType getSpriteType() {
+        return this.spriteType;
     }
 }
