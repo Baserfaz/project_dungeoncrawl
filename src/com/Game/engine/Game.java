@@ -182,7 +182,8 @@ public class Game extends Canvas implements Runnable {
         ItemManager.createAllItems();
         
         // create mock up player actor
-        actorManager.createActorInstance("Player_01", ActorType.Player, new Coordinate(0, 0), new Coordinate(3, 3), null, 0, 0, 3, 1, 5);
+        actorManager.createActorInstance("Player_01", ActorType.Player,
+                new Coordinate(0, 0), new Coordinate(3, 3), null, 0, 0, 3, 1, 5);
         
         // start game thread
         start();

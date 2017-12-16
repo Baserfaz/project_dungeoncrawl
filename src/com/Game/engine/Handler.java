@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Game.gameobjects.Actor;
 import com.Game.gameobjects.GameObject;
 import com.Game.gameobjects.Item;
 
@@ -20,24 +21,26 @@ public class Handler {
 
     public void render(Graphics g) {
 
+        // references
         // Camera cam = Game.instance.getCamera();
+        Actor player = Game.instance.getActorManager().getPlayerInstance();
+        if(player == null) return;
+        
         GameObject draggedObj = null;
 
-        // render all gameobjects 
+        // render all game objects 
         for(int i = 0; i < objects.size(); i++) {
-            
             GameObject current = objects.get(i);
             
+            // don't render invisible objects.
             if(current.getIsVisible() == false) continue;
             
-            if(current instanceof Item) {
-                if(((Item) current).isDragging()) {
-                    draggedObj = objects.get(i);
-                } else {
-                    objects.get(i).render(g);
-                }
-            } else {
-                objects.get(i).render(g);
+            // don't render objects that are not on the same tile as we are
+            if(current.getTilePosition().equals(player.getTilePosition())) {
+                if(current instanceof Item) {
+                    if(((Item) current).isDragging()) { draggedObj = objects.get(i);
+                    } else { objects.get(i).render(g); }
+                } else { objects.get(i).render(g); }
             }
         }
 

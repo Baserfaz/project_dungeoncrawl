@@ -19,6 +19,8 @@ public class ItemManager {
         // get camera
         Camera cam = Game.instance.getCamera();
         
+        Coordinate tilePos = new Coordinate(3, 3);
+        
         int yCount = 0;
         int spriteSize = 32 * Game.ITEMSPRITESIZEMULT;
         
@@ -38,7 +40,7 @@ public class ItemManager {
             ItemType itemType = getItemType(type);
             
             Item item = new Item(type.toString(), itemType, true,
-                    new Coordinate(x, y), new Coordinate(0, 0), type, 32, Game.ITEMSPRITESIZEMULT);
+                    new Coordinate(x, y), tilePos, type, 32, Game.ITEMSPRITESIZEMULT);
             _items.add(item);
             items.add(item);
             
