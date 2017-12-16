@@ -1,4 +1,6 @@
 # project_dungeoncrawl
-A game made with java (currently though it's just an 2D game engine with mouse driven GUI stuff).
+A "game" made with java, based on custom 2D engine, build from ground up.
 
-This whole project is basically done from absolute zero. It uses custom game engine and no third party plugins, libraries, engines or nothing of that sort.
+## Screenshots
+![project_dungeoncrawl_early](https://user-images.githubusercontent.com/7894317/34071424-dc1d0700-e27e-11e7-86a9-130dfcbc4a42.png)
+16.12.2017 GUI is working.
