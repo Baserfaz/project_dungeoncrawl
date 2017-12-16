@@ -14,13 +14,18 @@ public class Item extends GameObject {
 
     private ItemType itemType;
     private String name;
-
-    public Item(String name, ItemType itemType, Coordinate worldPos, Coordinate tilePos,
+    private boolean isDraggable;
+    private Coordinate draggingStartPosition;
+    private boolean dragging;
+    
+    public Item(String name, ItemType itemType, boolean isDraggable,
+            Coordinate worldPos, Coordinate tilePos,
             SpriteType spriteType, int spriteSize, int spriteSizeMult) {
         super(worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);
         this.itemType = itemType;
         this.name = name;
         this.dragging = false;
+        this.isDraggable = isDraggable;
     }
 
     public void tick() {
@@ -49,10 +54,9 @@ public class Item extends GameObject {
         return new Rectangle(this.worldPosition.x, this.worldPosition.y, this.size, this.size);
     }
 
-    public void inspect() {
-        System.out.println("Inspect: " + this.getInfo());
-    }
-
+    public boolean isDragging() { return dragging; }
+    public void setDragging(boolean dragging) { this.dragging = dragging; }
+    
     public String getInfo() {
         String s = super.getInfo();
         s += " name: " + this.name;
@@ -73,5 +77,21 @@ public class Item extends GameObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isDraggable() {
+        return isDraggable;
+    }
+
+    public void setDraggable(boolean isDraggable) {
+        this.isDraggable = isDraggable;
+    }
+
+    public Coordinate getDraggingStartPosition() {
+        return draggingStartPosition;
+    }
+
+    public void setDraggingStartPosition(Coordinate draggingStartPosition) {
+        this.draggingStartPosition = draggingStartPosition;
     }
 }

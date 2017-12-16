@@ -10,6 +10,7 @@ import com.Game.enumerations.GuiElementType;
 import com.Game.gameobjects.Actor;
 import com.Game.gameobjects.Item;
 import com.Game.gameobjects.Player;
+import com.Game.utilities.Coordinate;
 
 public class GuiEquipmentSlot extends GuiElement {
 
@@ -31,18 +32,41 @@ public class GuiEquipmentSlot extends GuiElement {
                 Equipment eq = ((Player) player).getEquipment();
                 ErrorType returnedError = eq.equipItem(item, this.slot);
                 
-                // debug
-                if(returnedError == ErrorType.ITEM_NOT_COMPATIBLE_WITH_SLOT ||
+                // on success
+                if(returnedError == ErrorType.NO_ERRORS) {
+                    
+                    System.out.println("Equipped item: " + item.getName() +
+                            " (" + item.getItemType() + ") to: " + this.slot.toString());
+                    
+                    // move the item to the center of the slot
+                    this.snapItemToSlot(item);
+
+                    
+                } else if(returnedError == ErrorType.ITEM_NOT_COMPATIBLE_WITH_SLOT ||
                         returnedError == ErrorType.SLOT_OCCUPIED)  {
+                    
                     System.out.println("Failed (" + returnedError.toString() + ") " +
                         "to equip item: " + item.getName() +
                         " (" + item.getItemType() + ") to: " + this.slot.toString());
-                } else {
-                    System.out.println("Equipped item: " + item.getName() +
-                            " (" + item.getItemType() + ") to: " + this.slot.toString()); 
+                    
+                    // put the item back to the start position
+                    item.setWorldPosition(item.getDraggingStartPosition());
+                    
                 }
             }
         }
+    }
+    
+    private void snapItemToSlot(Item item) {
+        int slotcentx = this.getRect().x + this.getRect().width / 2;
+        int slotcenty = this.getRect().y + this.getRect().height / 2;
+        
+        Rectangle ipos = item.getBounds();
+        
+        int itemcentx = ipos.width / 2;
+        int itemcenty = ipos.height / 2;
+        
+        item.setWorldPosition(slotcentx - itemcentx, slotcenty - itemcenty);
     }
     
     public EquipmentSlot getSlot() {

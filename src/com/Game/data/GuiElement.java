@@ -5,9 +5,11 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.Game.engine.Game;
+import com.Game.enumerations.EquipmentSlot;
 import com.Game.enumerations.GuiElementType;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.gameobjects.Actor;
+import com.Game.gameobjects.Player;
 import com.Game.gameobjects.Item;
 import com.Game.utilities.RenderUtils;
 
@@ -94,8 +96,9 @@ public class GuiElement {
 
     private void doClickFunction() {
         
-        // get player reference
+        // get references
         Actor player = Game.instance.getActorManager().getPlayerInstance();
+        Equipment eq = ((Player) player).getEquipment();
         
         switch(this.spriteType) {
             
@@ -171,6 +174,16 @@ public class GuiElement {
                 // enable equipment slots
                 for(GuiElement slot : Game.instance.getEquipmentSlots()) {
                     slot.enabled = true;
+                    
+                    EquipmentSlot eqSlot = ((GuiEquipmentSlot) slot).getSlot();
+                    
+                    // disable slot items
+                    Item eqItem = eq.getItem(eqSlot);
+                    if(eqItem != null) {
+                        eqItem.setIsVisible(true);
+                        eqItem.setIsEnabled(true);
+                    }
+                    
                 }
                 
                 Game.renderEquipmentSlots = true;
@@ -187,7 +200,7 @@ public class GuiElement {
                 // 6. show light character button
                 // -----------------------------
                 // also we have to disable the rendering of 
-                // equipment slots.
+                // equipment slots and items.
                 // -----------------------------
                 // disable equipment slots
                 
@@ -215,7 +228,17 @@ public class GuiElement {
                 
                 // disable equipment slots
                 for(GuiElement slot : Game.instance.getEquipmentSlots()) {
+                    
                     slot.enabled = false;
+                    
+                    EquipmentSlot eqSlot = ((GuiEquipmentSlot) slot).getSlot();
+                    
+                    // disable slot items
+                    Item eqItem = eq.getItem(eqSlot);
+                    if(eqItem != null) {
+                        eqItem.setIsVisible(false);
+                        eqItem.setIsEnabled(false);
+                    }
                 }
                 
                 Game.renderEquipmentSlots = false;

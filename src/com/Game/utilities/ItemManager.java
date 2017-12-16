@@ -37,7 +37,8 @@ public class ItemManager {
             
             ItemType itemType = getItemType(type);
             
-            Item item = new Item(type.toString(), itemType, new Coordinate(x, y), new Coordinate(0, 0), type, 32, Game.ITEMSPRITESIZEMULT);
+            Item item = new Item(type.toString(), itemType, true,
+                    new Coordinate(x, y), new Coordinate(0, 0), type, 32, Game.ITEMSPRITESIZEMULT);
             _items.add(item);
             items.add(item);
             
@@ -88,9 +89,11 @@ public class ItemManager {
         return it;
     }
 
-    public static Item createItem(String name, ItemType itemType, Coordinate worldPos, Coordinate tilePos,
+    public static Item createItem(String name, ItemType itemType, boolean isDraggable,
+            Coordinate worldPos, Coordinate tilePos,
             SpriteType spriteType, int spriteSize, int spriteSizeMult) {
-        Item item = new Item(name, itemType, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);
+        Item item = new Item(name, itemType, isDraggable,
+                worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);
         items.add(item);
         return item;
     }

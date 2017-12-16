@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.Game.gameobjects.GameObject;
+import com.Game.gameobjects.Item;
 
 public class Handler {
 
@@ -24,8 +25,17 @@ public class Handler {
 
         // render all gameobjects 
         for(int i = 0; i < objects.size(); i++) {
-            if(objects.get(i).isDragging()) {
-                draggedObj = objects.get(i);
+            
+            GameObject current = objects.get(i);
+            
+            if(current.getIsVisible() == false) continue;
+            
+            if(current instanceof Item) {
+                if(((Item) current).isDragging()) {
+                    draggedObj = objects.get(i);
+                } else {
+                    objects.get(i).render(g);
+                }
             } else {
                 objects.get(i).render(g);
             }

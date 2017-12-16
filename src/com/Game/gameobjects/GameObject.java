@@ -16,9 +16,12 @@ public abstract class GameObject {
     protected int spriteSize;
     protected int spriteSizeMult;
     protected int size;
-    protected boolean dragging;
-
-    public GameObject(Coordinate worldPos, Coordinate tilePos, SpriteType type, int spriteSize, int spriteSizeMult) {
+    
+    protected boolean isEnabled = true;
+    protected boolean isVisible = true;
+    
+    public GameObject(Coordinate worldPos, Coordinate tilePos,
+            SpriteType type, int spriteSize, int spriteSizeMult) {
 
         // set world position
         this.worldPosition = worldPos;
@@ -35,7 +38,7 @@ public abstract class GameObject {
 
         // create sprite
         this.sprite = Game.instance.getSpriteCreator().CreateSprite(type, spriteSize, spriteSizeMult);
-
+        
         // add to handler
         Game.instance.getHandler().AddObject(this);
     }
@@ -58,6 +61,10 @@ public abstract class GameObject {
     
     public Coordinate getWorldPosition() { return this.worldPosition; }
     public Coordinate getTilePosition() { return this.tilePosition; }
-    public boolean isDragging() { return dragging; }
-    public void setDragging(boolean dragging) { this.dragging = dragging; }
+    
+    public boolean getIsVisible() { return this.isVisible; }
+    public boolean getIsEnabled() { return this.isEnabled; }
+    
+    public void setIsVisible(boolean b) { this.isVisible = b; }
+    public void setIsEnabled(boolean b) { this.isEnabled = b; }
 }

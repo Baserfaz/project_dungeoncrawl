@@ -17,21 +17,27 @@ Classes / play styles:
 		- can create a temporary item (copy) of an existing item.
 			- excluding usables and other temp. items.
 		
-3. 'Keeper' / tank+healer combo
+3. 'Monk' / support, healer
 	3.1. abilities:
-		- can create aoe-bubble (single cell), in which the player gets buffs (?)
+		- can create aoe-bubble (around single cell), in which the player gets:
+			- heal over time, resistance,  absorb damage
 		- buff: damaging hits to enemies heal the player
 		- buff: reflect some taken damage back to enemy
-		- healing abilities does damage to enemies next to the target
+		- healing abilities does damage to enemies next to the healing target
 		
-4. 'Enchanter' / item buffer
+4. 'Enchanter' / support, buffer
 	4.1. abilities:
 		- can enchant weapons with different passive abilities:
 			- weapons: 
-				- proc: player can attack twice instead of once
-				- proc: add random elemental damage
-				- proc: player does aoe-damage instead of single target damage
+				- on attack: player can attack twice instead of once
+				- on attack: add random elemental damage
+				- on attack: player does aoe-damage instead of single target damage
 		- can give a shield that reflects offensive spells
 		- can create an single use item that can identify one magic item.
-			 	
+		
+5. 'Titan' / melee fighter
+	5.1. abilities:
+		- on attack: can attack multiple enemies on one hit, cleave
+		- on attack: apply bleed effect
+		- create armor: creates armor piece that absorbs few hits	
 			 	

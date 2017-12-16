@@ -11,6 +11,7 @@ import com.Game.data.GuiElement;
 import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
 import com.Game.gameobjects.Item;
+import com.Game.utilities.Coordinate;
 import com.Game.utilities.ItemManager;
 
 public class MouseInput implements MouseMotionListener, MouseListener {
@@ -116,6 +117,9 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             }
 
             for(Item item : items) {
+                
+                if(item.getIsEnabled() == false) continue;
+                
                 if(item.getBounds().contains(point)) {
                     stackedItems.add(item);
                 }
@@ -124,6 +128,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
             if(stackedItems.size() > 0) {
                 Item item = stackedItems.get(stackedItems.size() - 1);
                 item.setDragging(true);
+                item.setDraggingStartPosition(item.getWorldPosition());
                 clickedItem = item;
                 return;
             }
