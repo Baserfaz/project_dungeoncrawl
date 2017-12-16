@@ -48,6 +48,35 @@ public class Equipment {
         return retval;
     }
     
+    public void unequipItem(EquipmentSlot slot) {
+        switch(slot) {
+        case ARMOR:
+            this.armor = null;
+            break;
+        case HELMET:
+            this.helmet = null;
+            break;
+        case MAINHANDITEM:
+            this.mainHandItem = null;
+            break;
+        case OFFHANDITEM:
+            this.offHandItem = null;
+            break;
+        case RING01:
+            this.ring01 = null;
+            break;
+        case RING02:
+            this.ring02 = null;
+            break;
+        case RING03:
+            this.ring03 = null;
+            break;
+        case RING04:
+            this.ring04 = null;
+            break;
+        }
+    }
+    
     public ErrorType equipItem(Item item, EquipmentSlot slot) {
         
         // check if the slot is already occupied

@@ -7,10 +7,14 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Game.data.Equipment;
 import com.Game.data.GuiElement;
+import com.Game.data.GuiEquipmentSlot;
+import com.Game.data.GuiInventorySlot;
 import com.Game.enumerations.CursorMode;
 import com.Game.enumerations.GameState;
 import com.Game.gameobjects.Item;
+import com.Game.gameobjects.Player;
 import com.Game.utilities.Coordinate;
 import com.Game.utilities.ItemManager;
 
@@ -87,12 +91,13 @@ public class MouseInput implements MouseMotionListener, MouseListener {
         } else if(e.getButton() == MouseEvent.BUTTON2) {
         } else if(e.getButton() == MouseEvent.BUTTON3 ) {}
         
-        // reset stuff
+        // reset flags
         clickedItem = null;
         clickedElement = null;
     }
 
     private void handleMousePressedInGame(MouseEvent e) {
+        
         // refs
         List<GuiElement> guiElements = Game.instance.getAllGuiElements();
         List<Item> items = ItemManager.items;
@@ -127,6 +132,36 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 
             if(stackedItems.size() > 0) {
                 Item item = stackedItems.get(stackedItems.size() - 1);
+                
+                // ref to player
+                Player player = (Player) Game.instance.getActorManager().getPlayerInstance();
+                if(player == null) return;
+                
+                // references
+                Equipment equipment = player.getEquipment();
+                
+                // unequip item from equipment
+                for(GuiElement el : Game.instance.getEquipmentSlots()) {
+                    GuiEquipmentSlot eqSlot = ((GuiEquipmentSlot) el);
+                    if(equipment.getItem(eqSlot.getSlot()) == item) {
+                        equipment.unequipItem(eqSlot.getSlot());
+                        System.out.println("Unequipped " + item.getName() + " from " +
+                                eqSlot.getSlot().toString());
+                        break;
+                    }
+                }
+                
+                // remove item from inventory
+                for(GuiElement el : Game.instance.getInventorySlots()) {
+                    GuiInventorySlot invSlot = ((GuiInventorySlot) el);
+                    if(invSlot.getItem() == item) {
+                        invSlot.setItem(null);
+                        System.out.println("Removed " + item.getName() + " from inventory.");
+                        break;
+                    }
+                }
+                
+                // secondly start dragging the item
                 item.setDragging(true);
                 item.setDraggingStartPosition(item.getWorldPosition());
                 clickedItem = item;

@@ -44,7 +44,8 @@ public abstract class GameObject {
     }
 
     public String getInfo() {
-        return "GameObject: " + this.toString() + " worldPos: (" + this.getWorldPosition().x + ", " + this.getWorldPosition().y + ")";
+        return "GameObject: " + this.toString() + " worldPos: (" +
+                this.getWorldPosition().x + ", " + this.getWorldPosition().y + ")";
     }
 
     public abstract void tick();
