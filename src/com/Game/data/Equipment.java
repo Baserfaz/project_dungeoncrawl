@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.Game.enumerations.EquipmentSlot;
+import com.Game.enumerations.ErrorType;
 import com.Game.enumerations.ItemType;
 import com.Game.gameobjects.Item;
 
@@ -47,10 +48,13 @@ public class Equipment {
         return retval;
     }
     
-    public void equipItem(Item item, EquipmentSlot slot) {
+    public ErrorType equipItem(Item item, EquipmentSlot slot) {
+        
+        // check if the slot is already occupied
+        if(this.getItem(slot) != null) return ErrorType.SLOT_OCCUPIED;
         
         // check if the item can be equipped in this slot.
-        if(checkItemToSlotCombatibility(item, slot) == false) return;
+        if(checkItemToSlotCombatibility(item, slot) == false) return ErrorType.ITEM_NOT_COMPATIBLE_WITH_SLOT;
         
         switch(slot) {
         case ARMOR:
@@ -78,6 +82,7 @@ public class Equipment {
             this.ring04 = item;
             break;
         }
+        return ErrorType.NO_ERRORS;
     }
     
     public Item getItem(EquipmentSlot slot) {

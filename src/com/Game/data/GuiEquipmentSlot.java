@@ -3,9 +3,13 @@ package com.Game.data;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.Game.engine.Game;
 import com.Game.enumerations.EquipmentSlot;
+import com.Game.enumerations.ErrorType;
 import com.Game.enumerations.GuiElementType;
+import com.Game.gameobjects.Actor;
 import com.Game.gameobjects.Item;
+import com.Game.gameobjects.Player;
 
 public class GuiEquipmentSlot extends GuiElement {
 
@@ -20,9 +24,24 @@ public class GuiEquipmentSlot extends GuiElement {
     }
 
     public void onDrop(Item item) {
-        if(item != null) {
-            // TODO: equip item
-            System.out.println("Equip item " + item.getName() + " in " + this.slot.toString());
+        if(item != null && this.enabled) {
+            
+            Actor player = Game.instance.getActorManager().getPlayerInstance();
+            if(player != null) {
+                Equipment eq = ((Player) player).getEquipment();
+                ErrorType returnedError = eq.equipItem(item, this.slot);
+                
+                // debug
+                if(returnedError == ErrorType.ITEM_NOT_COMPATIBLE_WITH_SLOT ||
+                        returnedError == ErrorType.SLOT_OCCUPIED)  {
+                    System.out.println("Failed (" + returnedError.toString() + ") " +
+                        "to equip item: " + item.getName() +
+                        " (" + item.getItemType() + ") to: " + this.slot.toString());
+                } else {
+                    System.out.println("Equipped item: " + item.getName() +
+                            " (" + item.getItemType() + ") to: " + this.slot.toString()); 
+                }
+            }
         }
     }
     

@@ -161,11 +161,16 @@ public class GuiElement {
                         e.enabled = false;
                     } else if(type == GuiSpriteType.DARK_CHARACTER) {
                         e.visible = true;
-                        e.enabled = true;
+                        e.enabled = false;
                     } else if(type == GuiSpriteType.LIGHT_SPELLBOOK) {
                         e.visible = true;
                         e.enabled = true;
                     }
+                }
+                
+                // enable equipment slots
+                for(GuiElement slot : Game.instance.getEquipmentSlots()) {
+                    slot.enabled = true;
                 }
                 
                 Game.renderEquipmentSlots = true;
@@ -183,6 +188,8 @@ public class GuiElement {
                 // -----------------------------
                 // also we have to disable the rendering of 
                 // equipment slots.
+                // -----------------------------
+                // disable equipment slots
                 
                 // this is the light spell book
                 this.visible = false;
@@ -196,7 +203,7 @@ public class GuiElement {
                         e.visible = false;
                     } else if(type == GuiSpriteType.DARK_SPELLBOOK) {
                         e.visible = true;
-                        e.enabled = true;
+                        e.enabled = false;
                     } else if(type == GuiSpriteType.DARK_CHARACTER) {
                         e.visible = false;
                         e.enabled = false;
@@ -204,6 +211,11 @@ public class GuiElement {
                         e.visible = true;
                         e.enabled = true;
                     }
+                }
+                
+                // disable equipment slots
+                for(GuiElement slot : Game.instance.getEquipmentSlots()) {
+                    slot.enabled = false;
                 }
                 
                 Game.renderEquipmentSlots = false;
@@ -220,31 +232,59 @@ public class GuiElement {
                 
             // stats buttons
             // dark tinted buttons are clickable
-            case PRIMARY_STATS_DARK:
+            case SECONDARY_STATS_DARK:
                 
-                // 1. hide primary stats panel
-                // 2. show secondary stats panel
-                // ---------------------------------
-                // 3. hide hp/mana/energy
-                // 4. hide name, class, level
-                // ---------------------------------
-                // 5. hide dark primary stats button
-                // 6. show light primary stats button
-                // 7. hide light secondary stats button
-                // 8. show dark secondary stats button
-                
+                // hide secondary stats dark
                 this.visible = false;
                 this.enabled = false;
                 
                 for(GuiElement e : Game.instance.getAllGuiElements()) {
                     GuiSpriteType type = e.getSpriteType();
-                    if(type == GuiSpriteType.SPELLBOOK) {
+                    if(type == GuiSpriteType.PRIMARY_STATS_LIGHT) {
+                        e.visible = false;
+                        e.enabled = false;
+                    } else if(type == GuiSpriteType.PRIMARY_STATS_DARK) {
+                        e.visible = true;
+                        e.enabled = true;
+                    } else if(type == GuiSpriteType.SECONDARY_STATS_LIGHT) {
+                        e.visible = true;
+                        e.enabled = false;
+                    } else if(type == GuiSpriteType.STATS_PRIMARY) {
+                        e.visible = false;
+                    } else if(type == GuiSpriteType.STATS_SECONDARY) {
+                        e.visible = true;
+                    }
+                }
+                
+                Game.renderPrimaryStats = false;
+                
+                break;
+            case PRIMARY_STATS_DARK:
+                
+                // hide primary stats dark
+                this.visible = false;
+                this.enabled = false;
+                
+                for(GuiElement e : Game.instance.getAllGuiElements()) {
+                    GuiSpriteType type = e.getSpriteType();
+                    if(type == GuiSpriteType.PRIMARY_STATS_LIGHT) {
+                        e.visible = true;
+                        e.enabled = false;
+                    } else if(type == GuiSpriteType.SECONDARY_STATS_LIGHT) {
+                        e.visible = false;
+                        e.enabled = false;
+                    } else if(type == GuiSpriteType.SECONDARY_STATS_DARK) {
+                        e.visible = true;
+                        e.enabled = true;
+                    } else if(type == GuiSpriteType.STATS_PRIMARY) {
+                        e.visible = true;
+                    } else if(type == GuiSpriteType.STATS_SECONDARY) {
                         e.visible = false;
                     }
                 }
                 
-                break;
-            case SECONDARY_STATS_DARK:
+                Game.renderPrimaryStats = true;
+                
                 break;
                 
             default:

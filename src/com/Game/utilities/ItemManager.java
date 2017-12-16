@@ -35,7 +35,9 @@ public class ItemManager {
                 y = 20 + spriteSize * yCount;
             }
             
-            Item item = new Item(type.toString(), ItemType.OTHER, new Coordinate(x, y), new Coordinate(0, 0), type, 32, Game.ITEMSPRITESIZEMULT);
+            ItemType itemType = getItemType(type);
+            
+            Item item = new Item(type.toString(), itemType, new Coordinate(x, y), new Coordinate(0, 0), type, 32, Game.ITEMSPRITESIZEMULT);
             _items.add(item);
             items.add(item);
             
@@ -45,6 +47,47 @@ public class ItemManager {
         return _items;
     }
     
+    private static ItemType getItemType(SpriteType type) {
+        
+        // default type
+        ItemType it = ItemType.OTHER;
+        
+        if(type == SpriteType.AXE_IRON_ONE_BLADED ||
+                type == SpriteType.AXE_IRON_TWO_BLADED ||
+                type == SpriteType.DAGGER_IRON ||
+                type == SpriteType.HAMMER_IRON ||
+                type == SpriteType.STAFF_WOODEN ||
+                type == SpriteType.SWORD_FLAMING ||
+                type == SpriteType.SWORD_GOLD ||
+                type == SpriteType.SWORD_IRON ||
+                type == SpriteType.SWORD_SAPPHIRE ||
+                type == SpriteType.WAND_RUBY ||
+                type == SpriteType.WAND_SAPPHIRE || 
+                type == SpriteType.WAND_WOODEN) {
+            
+            it = ItemType.WEAPON;
+        } else if(type == SpriteType.SHIELD_IRON_KITE ||
+                type == SpriteType.SHIELD_IRON_TOWER ||
+                type == SpriteType.SHIELD_WOODEN_ROUND ||
+                type == SpriteType.SHIELD_WOODEN_TOWER) {
+            it = ItemType.SHIELD;
+        } else if(type == SpriteType.BLUE_POTION_BIG ||
+                type == SpriteType.BLUE_POTION_SMALL ||
+                type == SpriteType.RED_POTION_BIG ||
+                type == SpriteType.RED_POTION_SMALL) {
+            it = ItemType.POTION;
+        } else if(type == SpriteType.RING_GEM_EMERALD ||
+                type == SpriteType.RING_GOLDEN ||
+                type == SpriteType.RING_IRON) {
+            it = ItemType.RING;
+        } else if(type == SpriteType.KEY_GOLDEN ||
+                type == SpriteType.KEY_IRON) {
+            it = ItemType.KEY;
+        }
+            
+        return it;
+    }
+
     public static Item createItem(String name, ItemType itemType, Coordinate worldPos, Coordinate tilePos,
             SpriteType spriteType, int spriteSize, int spriteSizeMult) {
         Item item = new Item(name, itemType, worldPos, tilePos, spriteType, spriteSize, spriteSizeMult);

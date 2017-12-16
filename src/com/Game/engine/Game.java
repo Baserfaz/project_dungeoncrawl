@@ -164,8 +164,6 @@ public class Game extends Canvas implements Runnable {
         
         // create camera
         this.camera = new Camera();
-
-
         
         // create actor manager
         setActorManager(new ActorManager());

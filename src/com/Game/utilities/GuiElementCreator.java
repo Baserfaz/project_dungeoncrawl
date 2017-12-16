@@ -50,19 +50,20 @@ public class GuiElementCreator {
         
         // don't render these at start
         List<GuiSpriteType> notWantedToRender = Arrays.asList(GuiSpriteType.LIGHT_CHARACTER, 
-                GuiSpriteType.DARK_SPELLBOOK, GuiSpriteType.PRIMARY_STATS_DARK, GuiSpriteType.SECONDARY_STATS_LIGHT,
-                GuiSpriteType.STATS_SECONDARY, GuiSpriteType.SPELLBOOK);
+                GuiSpriteType.DARK_SPELLBOOK, GuiSpriteType.SECONDARY_STATS_LIGHT,
+                GuiSpriteType.STATS_SECONDARY, GuiSpriteType.SPELLBOOK, GuiSpriteType.PRIMARY_STATS_DARK);
         
         // isClickable list
         List<GuiSpriteType> isClickableElementAtStart = Arrays.asList(GuiSpriteType.ACTION_1, GuiSpriteType.ACTION_2, 
-                GuiSpriteType.AGREE, GuiSpriteType.BACKWARD, GuiSpriteType.DARK_CHARACTER, GuiSpriteType.DISAGREE,
+                GuiSpriteType.AGREE, GuiSpriteType.BACKWARD, GuiSpriteType.DISAGREE,
                 GuiSpriteType.FORWARD, GuiSpriteType.LIGHT_SPELLBOOK, GuiSpriteType.MAP, GuiSpriteType.MENU, 
-                GuiSpriteType.PRIMARY_STATS_LIGHT, GuiSpriteType.REST, GuiSpriteType.SECONDARY_STATS_DARK, 
+                GuiSpriteType.REST, GuiSpriteType.SECONDARY_STATS_DARK, 
                 GuiSpriteType.STRAFE_LEFT, GuiSpriteType.STRAFE_RIGHT, GuiSpriteType.TURN_LEFT, GuiSpriteType.TURN_RIGHT);
         
         // should be created as buttons, but not enabled at start
         List<GuiSpriteType> isButtonButNotClickableAtStart = Arrays.asList(GuiSpriteType.LIGHT_CHARACTER, 
-                GuiSpriteType.DARK_SPELLBOOK, GuiSpriteType.SECONDARY_STATS_LIGHT, GuiSpriteType.PRIMARY_STATS_LIGHT); 
+                GuiSpriteType.DARK_SPELLBOOK, GuiSpriteType.PRIMARY_STATS_LIGHT,
+                GuiSpriteType.DARK_CHARACTER, GuiSpriteType.PRIMARY_STATS_DARK); 
         
         // background element
         List<GuiSpriteType> backgroundElements = Arrays.asList(GuiSpriteType.EQUIPMENT, GuiSpriteType.STATS_PRIMARY, 
