@@ -66,6 +66,9 @@ public class Renderer {
         // render minimap on top of items and other GUI
         guirenderer.renderMinimap(g);
         
+        // render help texts and hover texts
+        guirenderer.renderHoverText(g);
+        
     }
 
     public static void fillScreen(Graphics g, Color color) {

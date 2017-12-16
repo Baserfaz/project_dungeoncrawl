@@ -63,6 +63,12 @@ public class GuiRenderer {
         renderInventorySlots(g);
     }   
 
+    public void renderHoverText(Graphics g) {
+//        g.setColor(Color.red);
+//        g.setFont(Game.instance.getCustomFont());
+//        g.drawString("LOLOLO", 500, 500);
+    }
+    
     public void renderMinimap(Graphics g) {
         if(Game.renderMinimap) {
             Game.instance.getMinimap().render(g);

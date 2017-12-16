@@ -17,6 +17,7 @@ import com.Game.gameobjects.Item;
 import com.Game.gameobjects.Player;
 import com.Game.utilities.Coordinate;
 import com.Game.utilities.ItemManager;
+import com.Game.utilities.RenderUtils;
 
 public class MouseInput implements MouseMotionListener, MouseListener {
 
@@ -41,11 +42,27 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 
     // mouse hover
     public void mouseMoved(MouseEvent e) {
-        Game.instance.setMousePos(e.getPoint());
+        if(Game.instance.getGamestate() == GameState.Ingame) {
+            Game.instance.setMousePos(e.getPoint());
+            
+            for(Item item : ItemManager.items) {
+                if(item.getIsVisible() && item.getIsEnabled()) {
+                    if(item.getBounds().contains(e.getPoint())) {
+                     
+                        // hovering on an item
+                        System.out.println("hovering on: " + item.getName());
+                        break;
+                        
+                    }
+                }
+            }
+        }
     }
 
     public void mouseDragged(MouseEvent e) {
-        Game.instance.setMousePos(e.getPoint());
+        if(Game.instance.getGamestate() == GameState.Ingame) {
+            Game.instance.setMousePos(e.getPoint());
+        }
     }
 
     // not used
