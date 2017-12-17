@@ -1,5 +1,6 @@
 package com.Game.gameobjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -14,6 +15,8 @@ public class Item extends GameObject {
 
     private ItemType itemType;
     private String name;
+    private boolean isIdentified;
+    
     private boolean isDraggable;
     private Coordinate draggingStartPosition;
     private boolean dragging;
@@ -26,6 +29,7 @@ public class Item extends GameObject {
         this.name = name;
         this.dragging = false;
         this.isDraggable = isDraggable;
+        this.isIdentified = false;
     }
 
     public void tick() {
@@ -38,10 +42,19 @@ public class Item extends GameObject {
 
     public void render(Graphics g) {
         
-        if(this.dragging) {
-            g.drawImage(RenderUtils.tint(this.sprite, true), this.worldPosition.x, this.worldPosition.y, null);
+        if(this.isIdentified) {
+            if(this.dragging) {
+                g.drawImage(RenderUtils.tint(this.sprite, true), 
+                        this.worldPosition.x, this.worldPosition.y, null);
+            } else {
+                g.drawImage(this.sprite, this.worldPosition.x, this.worldPosition.y, null);
+            }
         } else {
-            g.drawImage(this.sprite, this.worldPosition.x, this.worldPosition.y, null);
+            
+            // unidentified items are black
+            g.drawImage(RenderUtils.changeImageColor(this.sprite, Color.black), 
+                    this.worldPosition.x, this.worldPosition.y, null);
+            
         }
         
         if(Game.drawItemRects) {
@@ -53,13 +66,12 @@ public class Item extends GameObject {
     public Rectangle getBounds() {
         return new Rectangle(this.worldPosition.x, this.worldPosition.y, this.size, this.size);
     }
-
+    
     public boolean isDragging() { return dragging; }
     public void setDragging(boolean dragging) { this.dragging = dragging; }
     
     public String getInfo() {
-        String s = super.getInfo();
-        s += " name: " + this.name;
+        String s = "Name: " + this.name;
         return s;
     }
 
@@ -93,5 +105,13 @@ public class Item extends GameObject {
 
     public void setDraggingStartPosition(Coordinate draggingStartPosition) {
         this.draggingStartPosition = draggingStartPosition;
+    }
+
+    public boolean isIdentified() {
+        return isIdentified;
+    }
+
+    public void setIdentified(boolean isIdentified) {
+        this.isIdentified = isIdentified;
     }
 }

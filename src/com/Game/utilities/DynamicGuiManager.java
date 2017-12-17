@@ -1,17 +1,18 @@
 package com.Game.utilities;
 
 import com.Game.engine.GuiString;
+import com.Game.gameobjects.Item;
 
-public class GuiStringManager {
-
-    // this class' idea is that,
-    // it stores all modifiable
-    // gui-strings, that are 
-    // created with using sprite font.
+public class DynamicGuiManager {
+    
+    // this class caches dynamically
+    // created GUI-elements and data
     
     private GuiString playerName;
     private GuiString playerClass;
     private GuiString playerLevel;
+    
+    private Item mouseHoverItem;
     
     public GuiString getPlayerName() {
         return playerName;
@@ -32,6 +33,14 @@ public class GuiStringManager {
     }
     public void setPlayerLevel(GuiString lvl) {
         this.playerLevel = lvl;
+    }
+
+    public Item getMouseHoverItem() {
+        return mouseHoverItem;
+    }
+
+    public void setMouseHoverItem(Item mouseHoverItem) {
+        this.mouseHoverItem = mouseHoverItem;
     }
     
 }

@@ -41,7 +41,7 @@ public class ActorManager {
             Game.instance.getCamera().setFollowTarget(actor);
             
             // get reference
-            GuiStringManager mngr = Game.instance.getGuiStringManager();
+            DynamicGuiManager mngr = Game.instance.getDynamicGuiManager();
             
             // create sprite fonts
             mngr.setPlayerName(GuiElementCreator.createGuiString(actorName, 15, 152, Color.white));

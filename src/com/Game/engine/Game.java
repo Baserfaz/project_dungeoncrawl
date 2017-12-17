@@ -23,7 +23,7 @@ import com.Game.enumerations.GuiSpriteType;
 import com.Game.utilities.ActorManager;
 import com.Game.utilities.Coordinate;
 import com.Game.utilities.GuiElementCreator;
-import com.Game.utilities.GuiStringManager;
+import com.Game.utilities.DynamicGuiManager;
 import com.Game.utilities.ItemManager;
 import com.Game.utilities.SpriteCreator;
 import com.Game.utilities.SpriteLoader;
@@ -109,7 +109,7 @@ public class Game extends Canvas implements Runnable {
     
     private World world;
     private ActorManager actorManager;
-    private GuiStringManager guiStringManager;
+    private DynamicGuiManager dynamicGuiManager;
     private Minimap minimap;
     private Point mousePos;
 
@@ -135,7 +135,7 @@ public class Game extends Canvas implements Runnable {
 
         // create sprite managers and creators
         this.spriteCreator = new SpriteCreator(SPRITESHEETNAME);
-        this.guiStringManager = new GuiStringManager();
+        this.dynamicGuiManager = new DynamicGuiManager();
         this.guiRenderer = new GuiRenderer();
 
         // initiate sprite font
@@ -395,8 +395,8 @@ public class Game extends Canvas implements Runnable {
         this.allGuiElements = allGuiElements;
     }
 
-    public GuiStringManager getGuiStringManager() {
-        return guiStringManager;
+    public DynamicGuiManager getDynamicGuiManager() {
+        return dynamicGuiManager;
     }
 
 }

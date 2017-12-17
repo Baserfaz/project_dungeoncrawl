@@ -3,6 +3,7 @@ package com.Game.engine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,9 @@ import com.Game.data.Health;
 import com.Game.data.Mana;
 import com.Game.enumerations.GuiSpriteType;
 import com.Game.gameobjects.Actor;
+import com.Game.gameobjects.Item;
 import com.Game.utilities.Coordinate;
-import com.Game.utilities.GuiStringManager;
+import com.Game.utilities.DynamicGuiManager;
 import com.Game.utilities.RenderUtils;
 
 import java.awt.Rectangle;
@@ -64,9 +66,19 @@ public class GuiRenderer {
     }   
 
     public void renderHoverText(Graphics g) {
-//        g.setColor(Color.red);
-//        g.setFont(Game.instance.getCustomFont());
-//        g.drawString("LOLOLO", 500, 500);
+        
+        Item hoverItem = Game.instance.getDynamicGuiManager().getMouseHoverItem();
+        if(hoverItem == null) return;
+        
+        Point mousePos = Game.instance.getMousePos();
+        
+        g.setColor(Color.red);
+        //g.setFont(Game.instance.getCustomFont());
+        
+        int x = mousePos.x + 32 + 8;
+        int y = mousePos.y + 32 + 8;
+        
+        g.drawString(hoverItem.getInfo(), x, y);
     }
     
     public void renderMinimap(Graphics g) {
@@ -185,7 +197,7 @@ public class GuiRenderer {
         }
         
         // cache actor manager instance
-        GuiStringManager mngr = Game.instance.getGuiStringManager();
+        DynamicGuiManager mngr = Game.instance.getDynamicGuiManager();
         
         // draw name, level and class
         mngr.getPlayerName().render(g);
