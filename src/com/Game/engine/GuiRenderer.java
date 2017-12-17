@@ -1,6 +1,7 @@
 package com.Game.engine;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -69,16 +70,12 @@ public class GuiRenderer {
         
         Item hoverItem = Game.instance.getDynamicGuiManager().getMouseHoverItem();
         if(hoverItem == null) return;
-        
         Point mousePos = Game.instance.getMousePos();
-        
-        g.setColor(Color.red);
-        //g.setFont(Game.instance.getCustomFont());
         
         int x = mousePos.x + 32 + 8;
         int y = mousePos.y + 32 + 8;
         
-        g.drawString(hoverItem.getInfo(), x, y);
+        this.renderString(hoverItem.getInfo(), x, y, Color.black, g);
     }
     
     public void renderMinimap(Graphics g) {
@@ -221,6 +218,13 @@ public class GuiRenderer {
             }
         }
         return imgs;
+    }
+    
+    public void renderString(String msg, int x, int y, Color color, Graphics g) {
+         Font font = Game.instance.getCustomFont().deriveFont(Font.PLAIN, 40F);
+         g.setColor(Color.red);
+         g.setFont(font);
+         g.drawString(msg, x, y);
     }
     
     public void renderText(Graphics g, String txt, int x, int y, int margin, Color color) {
